@@ -37,7 +37,7 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
         return Math.sqrt(Math.exp(-t*(lambda + mu + psi))*q(t,c1,c2));
     }
 
-    private double log_q_tilde(double t, double c1, double c2) {
+    protected double log_q_tilde(double t) {
         return 0.5*(-t*(lambda + mu + psi) + log_q(t,c1,c2));
     }
 
@@ -113,11 +113,12 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
                 if  (!node.isDirectAncestor())  {
                     Node fossilParent = node.getParent();
                     if (combinedTree.getHeightOfNode(i) > 0.000000000005 || rho == 0.) {
-
+                    	logP += Math.log(psi) + log_p0s(combinedTree.getHeightOfNode(i), c1, c2);
+                    	
                         if (((SRTree)tree).belongToSameSRange(i, fossilParent.getNr())) {
-                            logP += Math.log(psi) - log_q_tilde(combinedTree.getHeightOfNode(i), c1, c2) + log_p0s(combinedTree.getHeightOfNode(i), c1, c2);
+                             logP -= log_q_tilde(combinedTree.getHeightOfNode(i));
                         } else {
-                            logP += Math.log(psi) - log_q(combinedTree.getHeightOfNode(i), c1, c2) + log_p0s(combinedTree.getHeightOfNode(i), c1, c2);
+                            logP -= log_q(combinedTree.getHeightOfNode(i), c1, c2);
                         }
                     } else {
                         logP += Math.log(rho);
@@ -130,13 +131,13 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
                     Node child = node.getNonDirectAncestorChild();
                     Node DAchild = node.getDirectAncestorChild();
                     if (parent != null && ((SRTree)tree).belongToSameSRange(parent.getNr(),DAchild.getNr())) {
-                        logP += - log_q_tilde(combinedTree.getHeightOfNode(i), c1, c2) + log_q(combinedTree.getHeightOfNode(i), c1, c2);
+                        logP += - log_q_tilde(combinedTree.getHeightOfNode(i)) + log_q(combinedTree.getHeightOfNode(i), c1, c2);
                     }
                     if (child != null && ((SRTree)tree).belongToSameSRange(i,child.getNr())) {
-                        logP += - log_q(combinedTree.getHeightOfNode(i), c1, c2) +  log_q_tilde(combinedTree.getHeightOfNode(i), c1, c2);
+                        logP += - log_q(combinedTree.getHeightOfNode(i), c1, c2) +  log_q_tilde(combinedTree.getHeightOfNode(i));
                     }
                 } else {
-                    logP += Math.log(lambda) + log_q(combinedTree.getHeightOfNode(i), c1, c2);
+                    logP += birthNodeContribution(node) + log_q(combinedTree.getHeightOfNode(i), c1, c2);
                 }
             }
         }
@@ -158,6 +159,10 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
         }
         return logP;
     }
+
+	protected double birthNodeContribution(Node node) {
+		return Math.log(lambda);
+	}
 
 }
 
