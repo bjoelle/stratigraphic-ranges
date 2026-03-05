@@ -154,6 +154,15 @@ public class StratigraphicRange extends BEASTObject {
         }
         return internalNodeNrs;
     }
+    
+    public List<Integer> getBranchingNodeNrs(SRTree tree) {
+        List<Integer> branchingNodeNrs = new ArrayList<>();
+        for (int i=1; i< nodes.size(); i++) {            
+            if (tree.getNode(nodes.get(i)).isDirectAncestor()) continue;
+            branchingNodeNrs.add(nodes.get(i));
+        }
+        return branchingNodeNrs;
+    }
 
     public void setFirstOccurrenceID(String ID) {
         if (taxonFirstOccurrenceInput.get() != null && ! taxonFirstOccurrenceInput.get().getID().equals(ID)) {

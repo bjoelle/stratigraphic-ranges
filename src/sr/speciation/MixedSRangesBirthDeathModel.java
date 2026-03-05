@@ -2,7 +2,9 @@ package sr.speciation;
 
 import beast.base.core.Input;
 import beast.base.evolution.tree.Node;
+import beast.base.evolution.tree.Tree;
 import beast.base.inference.parameter.RealParameter;
+import sr.evolution.sranges.StratigraphicRange;
 import sr.evolution.tree.SRTree;
 
 public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
@@ -12,6 +14,7 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 			new Input<RealParameter>("symProportion", "Proportion of symmetric birth, default 0.0", new RealParameter("0.0"));
 
 	private RealParameter anagenesisRate, symProportion;
+	private int nAsymNodes;
 
 	@Override
 	public void initAndValidate() {
@@ -36,8 +39,24 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	
 	@Override
 	protected double birthNodeContribution(Node node) {
-		if(((SRTree) combinedTree.getTree()).isAsymmetric(node.getNr())) return Math.log(lambda) + Math.log(1 - symProportion.getValue());
-		return Math.log(lambda) + Math.log(symProportion.getValue());
+		double pAsym = lambda * (1 - symProportion.getValue());
+		if(((SRTree) treeInput.get()).getRangeOfNode(node) != null) return Math.log(pAsym);
+		
+		System.out.println("Unknown asym status - node " + node.getNr()); //TODO remove check once verified
+		double pSym = lambda * symProportion.getValue();
+		int nBranchingNodes = treeInput.get().getInternalNodeCount() - ((Tree) treeInput.get()).getDirectAncestorNodeCount();
+		double pUnknAsym = symProportion.getValue() * nBranchingNodes / nAsymNodes;
+		return Math.log((1 - pUnknAsym) * pSym + pUnknAsym * pAsym);
 	}
 	
+	@Override
+	protected void updateParameters() {
+		super.updateParameters();
+		
+		SRTree tree = (SRTree) treeInput.get();
+		nAsymNodes = 0;
+		for (StratigraphicRange range : tree.getSRanges()) {
+			nAsymNodes += range.getBranchingNodeNrs(tree).size();
+		}
+	}
 }
