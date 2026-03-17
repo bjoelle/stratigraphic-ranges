@@ -29,6 +29,7 @@
         <provider classname="sr.evolution.tree.SpeciationLogger"/>
         <provider classname="sr.evolution.tree.SampledAncestorLogger"/>
         <provider classname="sr.speciation.SRangesBirthDeathModel"/>
+        <provider classname="sr.speciation.MixedSRangesBirthDeathModel"/>
         <provider classname="sr.evolution.tree.BranchRateLogger"/>
         <provider classname="sr.util.Tools"/>
     </service>
