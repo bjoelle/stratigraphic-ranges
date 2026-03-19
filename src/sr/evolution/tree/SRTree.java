@@ -570,9 +570,4 @@ public class SRTree extends Tree implements TreeInterface {
         return tree;
     }
 
-	public boolean isAsymmetric(int nr) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 }

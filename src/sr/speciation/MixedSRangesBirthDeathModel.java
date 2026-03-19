@@ -2,7 +2,6 @@ package sr.speciation;
 
 import beast.base.core.Input;
 import beast.base.evolution.tree.Node;
-import beast.base.evolution.tree.Tree;
 import beast.base.inference.parameter.RealParameter;
 import sr.evolution.sranges.StratigraphicRange;
 import sr.evolution.tree.SRTree;
@@ -40,11 +39,11 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	@Override
 	protected double birthNodeContribution(Node node) {
 		double pAsym = lambda * (1 - symProportion.getValue());
-		if(((SRTree) treeInput.get()).getRangeOfNode(node) != null) return Math.log(pAsym);
+		if(((SRTree) combinedTree.getTree()).getRangeOfNode(node) != null) return Math.log(pAsym);
 		
 		//System.out.println("Unknown asym status - node " + node.getNr()); //TODO remove check once verified
 		double pSym = lambda * symProportion.getValue();
-		int nBranchingNodes = treeInput.get().getInternalNodeCount() - ((Tree) treeInput.get()).getDirectAncestorNodeCount();
+		int nBranchingNodes = combinedTree.getTree().getInternalNodeCount() - combinedTree.getTree().getDirectAncestorNodeCount();
 		double pUnknAsym = symProportion.getValue() * nBranchingNodes / nAsymNodes;
 		return Math.log((1 - pUnknAsym) * pSym + pUnknAsym * pAsym);
 	}
@@ -53,7 +52,7 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	protected void updateParameters() {
 		super.updateParameters();
 		
-		SRTree tree = (SRTree) treeInput.get();
+		SRTree tree = (SRTree) combinedTree.getTree();
 		nAsymNodes = 0;
 		for (StratigraphicRange range : tree.getSRanges()) {
 			nAsymNodes += range.getBranchingNodeNrs(tree).size();
