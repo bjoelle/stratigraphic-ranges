@@ -39,11 +39,11 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	@Override
 	protected double birthNodeContribution(Node node) {
 		double pAsym = lambda * (1 - symProportion.getValue());
-		if(((SRTree) combinedTree.getTree()).getRangeOfNode(node) != null) return Math.log(pAsym);
+		if(((SRTree) SRcombinedTree.getTree()).getRangeOfNode(node) != null) return Math.log(pAsym);
 		
 		//System.out.println("Unknown asym status - node " + node.getNr()); //TODO remove check once verified
 		double pSym = lambda * symProportion.getValue();
-		int nBranchingNodes = combinedTree.getTree().getInternalNodeCount() - combinedTree.getTree().getDirectAncestorNodeCount();
+		int nBranchingNodes = SRcombinedTree.getTree().getInternalNodeCount() - SRcombinedTree.getTree().getDirectAncestorNodeCount();
 		double pUnknAsym = symProportion.getValue() * nBranchingNodes / nAsymNodes;
 		return Math.log((1 - pUnknAsym) * pSym + pUnknAsym * pAsym);
 	}
@@ -52,7 +52,7 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	protected void updateParameters() {
 		super.updateParameters();
 		
-		SRTree tree = (SRTree) combinedTree.getTree();
+		SRTree tree = (SRTree) SRcombinedTree.getTree();
 		nAsymNodes = 0;
 		for (StratigraphicRange range : tree.getSRanges()) {
 			nAsymNodes += range.getBranchingNodeNrs(tree).size();
