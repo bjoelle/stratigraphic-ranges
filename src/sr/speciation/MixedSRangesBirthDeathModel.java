@@ -13,7 +13,7 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 			new Input<RealParameter>("symProportion", "Proportion of symmetric birth, default 0.0", new RealParameter("0.0"));
 
 	private RealParameter anagenesisRate, symProportion;
-	private int nAsymNodes;
+	private int nKnownAsymNodes;
 
 	@Override
 	public void initAndValidate() {
@@ -44,7 +44,7 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 		//System.out.println("Unknown asym status - node " + node.getNr()); //TODO remove check once verified
 		double pSym = lambda * symProportion.getValue();
 		int nBranchingNodes = SRcombinedTree.getTree().getInternalNodeCount() - SRcombinedTree.getTree().getDirectAncestorNodeCount();
-		double pUnknSym = symProportion.getValue() * nBranchingNodes / (nBranchingNodes - nAsymNodes);
+		double pUnknSym = symProportion.getValue() * nBranchingNodes / (nBranchingNodes - nKnownAsymNodes);
 		return Math.log((1 - pUnknSym) * pAsym + pUnknSym * pSym);
 	}
 	
@@ -53,9 +53,9 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 		super.updateParameters();
 		
 		SRTree tree = (SRTree) SRcombinedTree.getTree();
-		nAsymNodes = 0;
+		nKnownAsymNodes = 0;
 		for (StratigraphicRange range : tree.getSRanges()) {
-			nAsymNodes += range.getBranchingNodeNrs(tree).size();
+			nKnownAsymNodes += range.getBranchingNodeNrs(tree).size();
 		}
 	}
 }
