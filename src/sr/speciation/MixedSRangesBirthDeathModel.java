@@ -44,8 +44,8 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 		//System.out.println("Unknown asym status - node " + node.getNr()); //TODO remove check once verified
 		double pSym = lambda * symProportion.getValue();
 		int nBranchingNodes = SRcombinedTree.getTree().getInternalNodeCount() - SRcombinedTree.getTree().getDirectAncestorNodeCount();
-		double pUnknAsym = symProportion.getValue() * nBranchingNodes / nAsymNodes;
-		return Math.log((1 - pUnknAsym) * pSym + pUnknAsym * pAsym);
+		double pUnknSym = symProportion.getValue() * nBranchingNodes / (nBranchingNodes - nAsymNodes);
+		return Math.log((1 - pUnknSym) * pAsym + pUnknSym * pSym);
 	}
 	
 	@Override
