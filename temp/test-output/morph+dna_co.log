@@ -1,0 +1,305 @@
+#
+#model:
+#
+#<?xml version="1.0" encoding="UTF-8" standalone="no"?><input id="posterior" spec="beast.base.inference.CompoundDistribution">
+#    <distribution id="prior" spec="beast.base.inference.CompoundDistribution">
+#        <prior id="origin_prior" name="distribution">
+#            <parameter id="origin" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="160.0">150.0</parameter>
+#            <Uniform id="Uniform" name="distr" upper="160.0"/>
+#        </prior>
+#        <prior id="diversificationRate_prior" name="distribution">
+#            <parameter id="diversificationRate" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <LogNormal id="LogNormalDistributionModel" name="distr">
+#                <M id="Function$Constant" spec="beast.base.core.Function$Constant" value="-3.5"/>
+#                <S id="Function$Constant1" spec="beast.base.core.Function$Constant" value="1.5"/>
+#            </LogNormal>
+#        </prior>
+#        <prior id="turnover_prior" name="distribution">
+#            <parameter id="turnover" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.5</parameter>
+#            <Uniform id="Uniform1" name="distr"/>
+#        </prior>
+#        <prior id="samplingProportion_prior" name="distribution">
+#            <parameter id="samplingProportion" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.7</parameter>
+#            <Uniform id="Uniform2" name="distr"/>
+#        </prior>
+#        <prior id="gammaShape_morph_prior" name="distribution">
+#            <parameter id="gammaShape.s:penguins_morph" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <Uniform id="Uniform3" name="distr" upper="10.0"/>
+#        </prior>
+#        <prior id="MeanRatePrior.c:penguins_morph" name="distribution">
+#            <parameter id="ucldMean.c:penguins_morph" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <LogNormal id="LogNormalDistributionModel1" name="distr">
+#                <M id="Function$Constant2" spec="beast.base.core.Function$Constant" value="-5.5"/>
+#                <S id="Function$Constant3" spec="beast.base.core.Function$Constant" value="2.0"/>
+#            </LogNormal>
+#        </prior>
+#        <prior id="ucldStdevPrior.c:penguins_morph" name="distribution">
+#            <parameter id="ucldStdev.c:penguins_morph" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter">0.1</parameter>
+#            <Gamma id="Gamma.0" name="distr">
+#                <parameter estimate="false" id="RealParameter.01" name="alpha" spec="beast.base.inference.parameter.RealParameter">0.5396</parameter>
+#                <parameter estimate="false" id="RealParameter.02" name="beta" spec="beast.base.inference.parameter.RealParameter">0.3819</parameter>
+#            </Gamma>
+#        </prior>
+#        <prior id="hky.frequencies_rag1.prior" name="distribution">
+#            <parameter dimension="4" id="freqParameter_rag1" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.25</parameter>
+#            <Uniform id="Uniform4" name="distr"/>
+#        </prior>
+#        <prior id="gammaShape_rag1_prior" name="distribution">
+#            <parameter id="gammaShape.s:penguins_rag1" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <Uniform id="Uniform5" name="distr" upper="10.0"/>
+#        </prior>
+#        <prior id="hky.frequencies_cyt_b.prior" name="distribution">
+#            <parameter dimension="4" id="freqParameter_cyt_b" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.25</parameter>
+#            <Uniform id="Uniform6" name="distr"/>
+#        </prior>
+#        <prior id="gammaShape_cyt_b_prior" name="distribution">
+#            <parameter id="gammaShape.s:penguins_cyt_b" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <Uniform id="Uniform7" name="distr" upper="10.0"/>
+#        </prior>
+#        <prior id="hky.frequencies_coi.prior" name="distribution">
+#            <parameter dimension="4" id="freqParameter_coi" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.25</parameter>
+#            <Uniform id="Uniform8" name="distr"/>
+#        </prior>
+#        <prior id="gammaShape_coi_prior" name="distribution">
+#            <parameter id="gammaShape.s:penguins_coi" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <Uniform id="Uniform9" name="distr" upper="10.0"/>
+#        </prior>
+#        <prior id="hky.frequencies_12srna.prior" name="distribution">
+#            <parameter dimension="4" id="freqParameter_12srna" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.25</parameter>
+#            <Uniform id="Uniform10" name="distr"/>
+#        </prior>
+#        <prior id="gammaShape_12srna_prior" name="distribution">
+#            <parameter id="gammaShape.s:penguins_12srna" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <Uniform id="Uniform11" name="distr" upper="10.0"/>
+#        </prior>
+#        <prior id="hky.frequencies_16srna.prior" name="distribution">
+#            <parameter dimension="4" id="freqParameter_16srna" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.25</parameter>
+#            <Uniform id="Uniform12" name="distr"/>
+#        </prior>
+#        <prior id="gammaShape_16srna_prior" name="distribution">
+#            <parameter id="gammaShape.s:penguins_16srna" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <Uniform id="Uniform13" name="distr" upper="10.0"/>
+#        </prior>
+#        <prior id="MeanRatePrior.c:penguins_dna" name="distribution">
+#            <parameter id="ucldMean.c:penguins_dna" name="x" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#            <LogNormal id="LogNormalDistributionModel2" name="distr">
+#                <M id="Function$Constant4" spec="beast.base.core.Function$Constant" value="-3.5"/>
+#                <S id="Function$Constant5" spec="beast.base.core.Function$Constant" value="1.0"/>
+#            </LogNormal>
+#        </prior>
+#        <prior id="ucldStdevPrior.c:penguins_dna" name="distribution">
+#            <parameter id="ucldStdev.c:penguins_dna" lower="0.0" name="x" spec="beast.base.inference.parameter.RealParameter">0.1</parameter>
+#            <Gamma id="Gamma.1" name="distr">
+#                <parameter estimate="false" id="RealParameter.03" name="alpha" spec="beast.base.inference.parameter.RealParameter">0.5396</parameter>
+#                <parameter estimate="false" id="RealParameter.04" name="beta" spec="beast.base.inference.parameter.RealParameter">0.3819</parameter>
+#            </Gamma>
+#        </prior>
+#        <distribution conditionOnRhoSampling="true" diversificationRate="@diversificationRate" id="birthDeath" origin="@origin" samplingProportion="@samplingProportion" spec="sr.speciation.SRangesBirthDeathModel" turnover="@turnover">
+#            <parameter id="r" lower="0.0" name="removalProbability" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.0</parameter>
+#            <parameter id="rho" lower="0.0" name="rho" spec="beast.base.inference.parameter.RealParameter" upper="1.0">1.0</parameter>
+#            <tree id="Tree.t:tree" nodetype="sr.evolution.tree.SRNode" spec="sr.evolution.tree.SRTree">
+#                <stratigraphicRange id="Madrynornis_mirandus_range" spec="sr.evolution.sranges.StratigraphicRange">
+#                    <firstOccurrence id="Madrynornis_mirandus" spec="beast.base.evolution.alignment.Taxon"/>
+#                    <lastOccurrence idref="Madrynornis_mirandus"/>
+#                </stratigraphicRange>
+#                <stratigraphicRange id="Spheniscus_urbinai_range" spec="sr.evolution.sranges.StratigraphicRange">
+#                    <firstOccurrence id="Spheniscus_urbinai_first" spec="beast.base.evolution.alignment.Taxon"/>
+#                    <lastOccurrence id="Spheniscus_urbinai_last" spec="beast.base.evolution.alignment.Taxon"/>
+#                </stratigraphicRange>
+#                <stratigraphicRange id="Spheniscus_megaramphus_range" spec="sr.evolution.sranges.StratigraphicRange">
+#                    <firstOccurrence id="Spheniscus_megaramphus_first" spec="beast.base.evolution.alignment.Taxon"/>
+#                    <lastOccurrence id="Spheniscus_megaramphus_last" spec="beast.base.evolution.alignment.Taxon"/>
+#                </stratigraphicRange>
+#                <stratigraphicRange id="Spheniscus_muizoni_range" spec="sr.evolution.sranges.StratigraphicRange">
+#                    <firstOccurrence id="Spheniscus_muizoni" spec="beast.base.evolution.alignment.Taxon"/>
+#                    <lastOccurrence idref="Spheniscus_muizoni"/>
+#                </stratigraphicRange>
+#                <stratigraphicRange id="Pygoscelis_grandis_range" spec="sr.evolution.sranges.StratigraphicRange">
+#                    <firstOccurrence id="Pygoscelis_grandis_first" spec="beast.base.evolution.alignment.Taxon"/>
+#                    <lastOccurrence id="Pygoscelis_grandis_last" spec="beast.base.evolution.alignment.Taxon"/>
+#                </stratigraphicRange>
+#                <stratigraphicRange id="Marplesornis_novaezealandiae_range" spec="sr.evolution.sranges.StratigraphicRange">
+#                    <firstOccurrence id="Marplesornis_novaezealandiae" spec="beast.base.evolution.alignment.Taxon"/>
+#                    <lastOccurrence idref="Marplesornis_novaezealandiae"/>
+#                </stratigraphicRange>
+#                <stratigraphicRange id="StratigraphicRange" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange1" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange2" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange3" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange4" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange5" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange6" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange7" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange8" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange9" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange10" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange11" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange12" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange13" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange14" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange15" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange16" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange17" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <stratigraphicRange id="StratigraphicRange18" spec="sr.evolution.sranges.StratigraphicRange"/>
+#                <trait id="dateTrait.t:tree" spec="beast.base.evolution.tree.TraitSet" traitname="date-backward" value="                 Aptenodytes_forsteri = 0.0,                 Aptenodytes_patagonicus = 0.0,                 Pygoscelis_antarctica = 0.0,                 Pygoscelis_papua = 0.0,                 Pygoscelis_adeliae = 0.0,                 Megadyptes_antipodes = 0.0,                 Eudyptes_chrysocome = 0.0,                 Eudyptes_chrysolophus = 0.0,                 Eudyptes_filholi = 0.0,                 Eudyptes_moseleyi = 0.0,                 Eudyptes_pachyrhynchus = 0.0,                 Eudyptes_robustus = 0.0,                 Eudyptes_schlegeli = 0.0,                 Eudyptes_sclateri = 0.0,                 Eudyptula_minor = 0.0,                 Spheniscus_demersus = 0.0,                 Spheniscus_magellanicus = 0.0,                 Spheniscus_humboldti = 0.0,                 Spheniscus_mendiculus = 0.0,                 Madrynornis_mirandus = 10.0,                 Spheniscus_urbinai_first = 9.0,                 Spheniscus_urbinai_last = 6.0,                 Spheniscus_megaramphus_first = 10,                 Spheniscus_megaramphus_last = 7.52,                 Spheniscus_muizoni = 9.05,                 Pygoscelis_grandis_first = 6.0,                 Pygoscelis_grandis_last = 3.0,                 Marplesornis_novaezealandiae = 5.1">
+#                    <taxa id="TaxonSet.penguins" spec="beast.base.evolution.alignment.TaxonSet">
+#                    </taxa>
+#                </trait>
+#                <taxonset idref="TaxonSet.penguins"/>
+#            </tree>
+#        </distribution>
+#    </distribution>
+#    <distribution id="likelihood" spec="beast.base.inference.CompoundDistribution">
+#        <distribution id="morphTreeLikelihood.penguins2" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree" useAmbiguities="true">
+#            <data data="@penguins_morph" filter="2-3,6-7,10,14,17-18,24,28-30,33,36-37,40,43,45-55,57,59,61-62,65,67-70,77,79-82,84-85,87,91-92,95,99,101-103,105-108,110-112, 114-115,119,123,125,129,131-132,134,138-139,142,144,147-150,152-153,155,159,161-165,168,170,172,174,176-180,182-184,190,196,202-204,207-208,211-213,215-217,219-221,223-226,229-233,236-237,239-244" id="penguins2" spec="beast.base.evolution.alignment.FilteredAlignment">
+#                <userDataType ambiguities="01 12 45" id="morphDataType.penguins2" nrOfStates="2" spec="beast.base.evolution.datatype.StandardData"/>
+#            </data>
+#            <siteModel gammaCategoryCount="4" id="morphSiteModel.s:penguins2" shape="@gammaShape.s:penguins_morph" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter estimate="false" id="mutationRate.s:penguins2" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                <parameter estimate="false" id="proportionInvariant.s:penguins2" lower="0.0" name="proportionInvariant" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.0</parameter>
+#                <substModel datatype="@morphDataType.penguins2" id="LewisMK.s:penguins2" spec="morphmodels.evolution.substitutionmodel.LewisMK"/>
+#            </siteModel>
+#            <branchRateModel clock.rate="@ucldMean.c:penguins_morph" id="RelaxedClock.c:penguins_morph" spec="beast.base.evolution.branchratemodel.UCRelaxedClockModel" tree="@Tree.t:tree">
+#                <LogNormal S="@ucldStdev.c:penguins_morph" id="LogNormalDistributionModel.c:clock_morph" meanInRealSpace="true" name="distr">
+#                    <parameter estimate="false" id="Mrelaxed_morph" lower="0.0" name="M" spec="beast.base.inference.parameter.RealParameter" upper="1.0">1.0</parameter>
+#                </LogNormal>
+#                <rateCategories dimension="54" id="rateCategories.c:penguins_morph" spec="beast.base.inference.parameter.IntegerParameter">1</rateCategories>
+#            </branchRateModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_morph" id="morphTreeLikelihood.penguins3" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree" useAmbiguities="true">
+#            <data data="@penguins_morph" filter="5,8,12,15,31-32,34,44,56,58,71-74,76,83,88,96-97,104,109,117-118,120,122,126-127,137,140,143,151,156,158,160,167,169,171,186,194,199-200,206,209-210,214,218,222,227,235,238" id="penguins3" spec="beast.base.evolution.alignment.FilteredAlignment">
+#                <userDataType ambiguities="01 12 45" id="morphDataType.penguins3" nrOfStates="3" spec="beast.base.evolution.datatype.StandardData"/>
+#            </data>
+#            <siteModel gammaCategoryCount="4" id="morphSiteModel.s:penguins3" shape="@gammaShape.s:penguins_morph" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter estimate="false" id="mutationRate.s:penguins3" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                <parameter estimate="false" id="proportionInvariant.s:penguins3" lower="0.0" name="proportionInvariant" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.0</parameter>
+#                <substModel datatype="@morphDataType.penguins3" id="LewisMK.s:penguins3" spec="morphmodels.evolution.substitutionmodel.LewisMK"/>
+#            </siteModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_morph" id="morphTreeLikelihood.penguins4" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree" useAmbiguities="true">
+#            <data data="@penguins_morph" filter="1,4,35,38-39,42,60,63-64,100,136,166,205" id="penguins4" spec="beast.base.evolution.alignment.FilteredAlignment">
+#                <userDataType ambiguities="01 12 45" id="morphDataType.penguins4" nrOfStates="4" spec="beast.base.evolution.datatype.StandardData"/>
+#            </data>
+#            <siteModel gammaCategoryCount="4" id="morphSiteModel.s:penguins4" shape="@gammaShape.s:penguins_morph" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter estimate="false" id="mutationRate.s:penguins4" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                <parameter estimate="false" id="proportionInvariant.s:penguins4" lower="0.0" name="proportionInvariant" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.0</parameter>
+#                <substModel datatype="@morphDataType.penguins4" id="LewisMK.s:penguins4" spec="morphmodels.evolution.substitutionmodel.LewisMK"/>
+#            </siteModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_morph" id="morphTreeLikelihood.penguins5" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree" useAmbiguities="true">
+#            <data data="@penguins_morph" filter="13,16,41,66" id="penguins5" spec="beast.base.evolution.alignment.FilteredAlignment">
+#                <userDataType ambiguities="01 12 45" id="morphDataType.penguins5" nrOfStates="5" spec="beast.base.evolution.datatype.StandardData"/>
+#            </data>
+#            <siteModel gammaCategoryCount="4" id="morphSiteModel.s:penguins5" shape="@gammaShape.s:penguins_morph" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter estimate="false" id="mutationRate.s:penguins5" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                <parameter estimate="false" id="proportionInvariant.s:penguins5" lower="0.0" name="proportionInvariant" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.0</parameter>
+#                <substModel datatype="@morphDataType.penguins5" id="LewisMK.s:penguins5" spec="morphmodels.evolution.substitutionmodel.LewisMK"/>
+#            </siteModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_morph" id="morphTreeLikelihood.penguins6" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree" useAmbiguities="true">
+#            <data data="@penguins_morph" filter="11,21,124,173" id="penguins6" spec="beast.base.evolution.alignment.FilteredAlignment">
+#                <userDataType ambiguities="01 12 45" id="morphDataType.penguins6" nrOfStates="6" spec="beast.base.evolution.datatype.StandardData"/>
+#            </data>
+#            <siteModel gammaCategoryCount="4" id="morphSiteModel.s:penguins6" shape="@gammaShape.s:penguins_morph" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter estimate="false" id="mutationRate.s:penguins6" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                <parameter estimate="false" id="proportionInvariant.s:penguins6" lower="0.0" name="proportionInvariant" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.0</parameter>
+#                <substModel datatype="@morphDataType.penguins6" id="LewisMK.s:penguins6" spec="morphmodels.evolution.substitutionmodel.LewisMK"/>
+#            </siteModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_morph" id="morphTreeLikelihood.penguins7" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree" useAmbiguities="true">
+#            <data data="@penguins_morph" filter="9" id="penguins7" spec="beast.base.evolution.alignment.FilteredAlignment">
+#                <userDataType ambiguities="01 12 45" id="morphDataType.penguins7" nrOfStates="7" spec="beast.base.evolution.datatype.StandardData"/>
+#            </data>
+#            <siteModel gammaCategoryCount="4" id="morphSiteModel.s:penguins7" shape="@gammaShape.s:penguins_morph" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter estimate="false" id="mutationRate.s:penguins7" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                <parameter estimate="false" id="proportionInvariant.s:penguins7" lower="0.0" name="proportionInvariant" spec="beast.base.inference.parameter.RealParameter" upper="1.0">0.0</parameter>
+#                <substModel datatype="@morphDataType.penguins7" id="LewisMK.s:penguins7" spec="morphmodels.evolution.substitutionmodel.LewisMK"/>
+#            </siteModel>
+#        </distribution>
+#        <distribution id="treeLikelihood.penguins_rag1" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree">
+#            <data filter="1-2682" id="penguins_rag1" spec="beast.base.evolution.alignment.FilteredAlignment">
+#            </data>
+#            <siteModel gammaCategoryCount="4" id="SiteModel.s:penguins_rag1" shape="@gammaShape.s:penguins_rag1" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter id="mutationRate.s:penguins_rag1" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">0.2</parameter>
+#                <substModel id="GTR.s:penguins_rag1" spec="beast.base.evolution.substitutionmodel.GTR">
+#                    <parameter id="rateAC_rag1" lower="0.0" name="rateAC" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateAG_rag1" lower="0.0" name="rateAG" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                    <parameter id="rateAT_rag1" lower="0.0" name="rateAT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCG_rag1" lower="0.0" name="rateCG" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCT_rag1" lower="0.0" name="rateCT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateGT_rag1" lower="0.0" name="rateGT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <frequencies frequencies="@freqParameter_rag1" id="freqs_rag1" spec="beast.base.evolution.substitutionmodel.Frequencies"/>
+#                </substModel>
+#            </siteModel>
+#            <branchRateModel clock.rate="@ucldMean.c:penguins_dna" id="RelaxedClock.c:penguins_dna" spec="beast.base.evolution.branchratemodel.UCRelaxedClockModel" tree="@Tree.t:tree">
+#                <LogNormal S="@ucldStdev.c:penguins_dna" id="LogNormalDistributionModel.c:clock_dna" meanInRealSpace="true" name="distr">
+#                    <parameter estimate="false" id="Mrelaxed_dna" lower="0.0" name="M" spec="beast.base.inference.parameter.RealParameter" upper="1.0">1.0</parameter>
+#                </LogNormal>
+#                <rateCategories dimension="54" id="rateCategories.c:penguins_dna" spec="beast.base.inference.parameter.IntegerParameter">1</rateCategories>
+#            </branchRateModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_dna" id="treeLikelihood.penguins_cyt_b" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree">
+#            <data data="@penguins" filter="2683-3825" id="penguins_cyt_b" spec="beast.base.evolution.alignment.FilteredAlignment"/>
+#            <siteModel gammaCategoryCount="4" id="SiteModel.s:penguins_cyt_b" shape="@gammaShape.s:penguins_cyt_b" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter id="mutationRate.s:penguins_cyt_b" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">0.2</parameter>
+#                <substModel id="GTR.s:penguins_cyt_b" spec="beast.base.evolution.substitutionmodel.GTR">
+#                    <parameter id="rateAC_cyt_b" lower="0.0" name="rateAC" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateAG_cyt_b" lower="0.0" name="rateAG" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                    <parameter id="rateAT_cyt_b" lower="0.0" name="rateAT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCG_cyt_b" lower="0.0" name="rateCG" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCT_cyt_b" lower="0.0" name="rateCT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateGT_cyt_b" lower="0.0" name="rateGT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <frequencies frequencies="@freqParameter_cyt_b" id="freqs_cyt_b" spec="beast.base.evolution.substitutionmodel.Frequencies"/>
+#                </substModel>
+#            </siteModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_dna" id="treeLikelihood.penguins_coi" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree">
+#            <data data="@penguins" filter="3826-5376" id="penguins_coi" spec="beast.base.evolution.alignment.FilteredAlignment"/>
+#            <siteModel gammaCategoryCount="4" id="SiteModel.s:penguins_coi" shape="@gammaShape.s:penguins_coi" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter id="mutationRate.s:penguins_coi" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">0.2</parameter>
+#                <substModel id="GTR.s:penguins_coi" spec="beast.base.evolution.substitutionmodel.GTR">
+#                    <parameter id="rateAC_coi" lower="0.0" name="rateAC" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateAG_coi" lower="0.0" name="rateAG" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                    <parameter id="rateAT_coi" lower="0.0" name="rateAT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCG_coi" lower="0.0" name="rateCG" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCT_coi" lower="0.0" name="rateCT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateGT_coi" lower="0.0" name="rateGT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <frequencies frequencies="@freqParameter_coi" id="freqs_coi" spec="beast.base.evolution.substitutionmodel.Frequencies"/>
+#                </substModel>
+#            </siteModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_dna" id="treeLikelihood.penguins_12srna" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree">
+#            <data data="@penguins" filter="5377-6481" id="penguins_12srna" spec="beast.base.evolution.alignment.FilteredAlignment"/>
+#            <siteModel gammaCategoryCount="4" id="SiteModel.s:penguins_12srna" shape="@gammaShape.s:penguins_12srna" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter id="mutationRate.s:penguins_12srna" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">0.2</parameter>
+#                <substModel id="GTR.s:penguins_12srna" spec="beast.base.evolution.substitutionmodel.GTR">
+#                    <parameter id="rateAC_12srna" lower="0.0" name="rateAC" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateAG_12srna" lower="0.0" name="rateAG" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                    <parameter id="rateAT_12srna" lower="0.0" name="rateAT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCG_12srna" lower="0.0" name="rateCG" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCT_12srna" lower="0.0" name="rateCT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateGT_12srna" lower="0.0" name="rateGT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <frequencies frequencies="@freqParameter_12srna" id="freqs_12srna" spec="beast.base.evolution.substitutionmodel.Frequencies"/>
+#                </substModel>
+#            </siteModel>
+#        </distribution>
+#        <distribution branchRateModel="@RelaxedClock.c:penguins_dna" id="treeLikelihood.penguins_16srna" spec="beast.base.evolution.likelihood.TreeLikelihood" tree="@Tree.t:tree">
+#            <data data="@penguins" filter="6482-8145" id="penguins_16srna" spec="beast.base.evolution.alignment.FilteredAlignment"/>
+#            <siteModel gammaCategoryCount="4" id="SiteModel.s:penguins_16srna" shape="@gammaShape.s:penguins_16srna" spec="beast.base.evolution.sitemodel.SiteModel">
+#                <parameter id="mutationRate.s:penguins_16srna" name="mutationRate" spec="beast.base.inference.parameter.RealParameter">0.2</parameter>
+#                <substModel id="GTR.s:penguins_16srna" spec="beast.base.evolution.substitutionmodel.GTR">
+#                    <parameter id="rateAC_16srna" lower="0.0" name="rateAC" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateAG_16srna" lower="0.0" name="rateAG" spec="beast.base.inference.parameter.RealParameter">1.0</parameter>
+#                    <parameter id="rateAT_16srna" lower="0.0" name="rateAT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCG_16srna" lower="0.0" name="rateCG" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateCT_16srna" lower="0.0" name="rateCT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <parameter id="rateGT_16srna" lower="0.0" name="rateGT" spec="beast.base.inference.parameter.RealParameter" upper="100.0">1.0</parameter>
+#                    <frequencies frequencies="@freqParameter_16srna" id="freqs_16srna" spec="beast.base.evolution.substitutionmodel.Frequencies"/>
+#                </substModel>
+#            </siteModel>
+#        </distribution>
+#    </distribution>
+#</input>
+#
+Sample	posterior	likelihood	prior	birthDeath	morphTreeLikelihood.penguins2	morphTreeLikelihood.penguins3	morphTreeLikelihood.penguins4	morphTreeLikelihood.penguins5	morphTreeLikelihood.penguins6	morphTreeLikelihood.penguins7	treeLikelihood.penguins_12srna	treeLikelihood.penguins_16srna	treeLikelihood.penguins_coi	treeLikelihood.penguins_cyt_b	treeLikelihood.penguins_rag1	TreeHeight	SACount	origin	diversificationRate	turnover	samplingProportion	ucldMean.dna	ucldMean.morph	ucldStdev.dna	ucldStdev.morph	rate.dna.mean	rate.dna.variance	rate.dna.coefficientOfVariation	rate.morph.mean	rate.morph.variance	rate.morph.coefficientOfVariation	mutationRate.12srna	mutationRate.16srna	mutationRate.coi	mutationRate.cyt_b	mutationRate.rag1	gammaShape.12srna	gammaShape.16srna	gammaShape.coi	gammaShape.cyt_b	gammaShape.morph	gammaShape.rag1	rateAC_rag1	rateGT_rag1	rateAT_rag1	rateCG_rag1	rateCT_rag1	freqParameter_rag1.1	freqParameter_rag1.2	freqParameter_rag1.3	freqParameter_rag1.4	rateAC_cyt_b	rateGT_cyt_b	rateAT_cyt_b	rateCG_cyt_b	rateCT_cyt_b	freqParameter_cyt_b.1	freqParameter_cyt_b.2	freqParameter_cyt_b.3	freqParameter_cyt_b.4	rateAC_coi	rateGT_coi	rateAT_coi	rateCG_coi	rateCT_coi	freqParameter_coi.1	freqParameter_coi.2	freqParameter_coi.3	freqParameter_coi.4	rateAC_12srna	rateGT_12srna	rateAT_12srna	rateCG_12srna	rateCT_12srna	freqParameter_12srna.1	freqParameter_12srna.2	freqParameter_12srna.3	freqParameter_12srna.4	rateAC_16srna	rateGT_16srna	rateAT_16srna	rateCG_16srna	rateCT_16srna	freqParameter_16srna.1	freqParameter_16srna.2	freqParameter_16srna.3	freqParameter_16srna.4
+0	-34820.04538180986	-34050.61063961273	-769.4347421971356	-735.6988860036747	-1424.9947688638033	-809.1172797052674	-338.006637603681	-145.27458426157415	-111.04110415661339	-38.317127774287925	-5704.329512481513	-6248.114565072556	-3830.2526072304167	-8432.276115781657	-6968.886336681363	13.748390852652037	3	150.0	1.0	0.5	0.7	1.0	1.0	0.1	0.1	0.9609049747121775	0.007753018670608218	0.08854321054834927	1.0164020987877243	0.008027497495792402	0.08973272379052345	0.2	0.2	0.2	0.2	0.2	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	1.0	0.25	0.25	0.25	0.25	1.0	1.0	1.0	1.0	1.0	0.25	0.25	0.25	0.25	1.0	1.0	1.0	1.0	1.0	0.25	0.25	0.25	0.25	1.0	1.0	1.0	1.0	1.0	0.25	0.25	0.25	0.25	1.0	1.0	1.0	1.0	1.0	0.25	0.25	0.25	0.25

@@ -1,0 +1,68 @@
+#NEXUS
+
+Begin taxa;
+	Dimensions ntax=28;
+		Taxlabels
+			Aptenodytes_forsteri
+			Aptenodytes_patagonicus
+			Pygoscelis_antarctica
+			Pygoscelis_papua
+			Pygoscelis_adeliae
+			Megadyptes_antipodes
+			Eudyptes_chrysocome
+			Eudyptes_chrysolophus
+			Eudyptes_filholi
+			Eudyptes_moseleyi
+			Eudyptes_pachyrhynchus
+			Eudyptes_robustus
+			Eudyptes_schlegeli
+			Eudyptes_sclateri
+			Eudyptula_minor
+			Madrynornis_mirandus
+			Spheniscus_demersus
+			Spheniscus_magellanicus
+			Spheniscus_humboldti
+			Spheniscus_mendiculus
+			Spheniscus_urbinai_first
+			Spheniscus_urbinai_last
+			Spheniscus_megaramphus_first
+			Spheniscus_megaramphus_last
+			Spheniscus_muizoni
+			Marplesornis_novaezealandiae
+			Pygoscelis_grandis_first
+			Pygoscelis_grandis_last
+			;
+End;
+Begin trees;
+	Translate
+		     1 Aptenodytes_forsteri,
+		     2 Aptenodytes_patagonicus,
+		     3 Pygoscelis_antarctica,
+		     4 Pygoscelis_papua,
+		     5 Pygoscelis_adeliae,
+		     6 Megadyptes_antipodes,
+		     7 Eudyptes_chrysocome,
+		     8 Eudyptes_chrysolophus,
+		     9 Eudyptes_filholi,
+		    10 Eudyptes_moseleyi,
+		    11 Eudyptes_pachyrhynchus,
+		    12 Eudyptes_robustus,
+		    13 Eudyptes_schlegeli,
+		    14 Eudyptes_sclateri,
+		    15 Eudyptula_minor,
+		    16 Madrynornis_mirandus,
+		    17 Spheniscus_demersus,
+		    18 Spheniscus_magellanicus,
+		    19 Spheniscus_humboldti,
+		    20 Spheniscus_mendiculus,
+		    21 Spheniscus_urbinai_first,
+		    22 Spheniscus_urbinai_last,
+		    23 Spheniscus_megaramphus_first,
+		    24 Spheniscus_megaramphus_last,
+		    25 Spheniscus_muizoni,
+		    26 Marplesornis_novaezealandiae,
+		    27 Pygoscelis_grandis_first,
+		    28 Pygoscelis_grandis_last
+;
+tree STATE_0 = ((((((((17[&orientation=ancestor]:0.03946045770479462,(15[&orientation=ancestor]:0.0012326603086955615,19[&orientation=descendant]:0.0012326603086955615)29[&orientation=descendant]:0.038227797396099064)30[&orientation=ancestor]:0.007014117065133815,7[&orientation=descendant]:0.04647457476992844)31[&orientation=ancestor]:0.23837042911634448,((1[&orientation=ancestor]:0.0649454688042221,6[&orientation=descendant]:0.0649454688042221)32[&orientation=ancestor]:0.11345097560998475,((10[&orientation=ancestor]:0.048050558763570166,(13[&orientation=ancestor]:0.019882974160606123,(20[&orientation=ancestor]:0.014100608093274337,5[&orientation=descendant]:0.014100608093274337)33[&orientation=descendant]:0.005782366067331787)34[&orientation=descendant]:0.028167584602964042)35[&orientation=ancestor]:0.11788952577674527,4[&orientation=descendant]:0.16594008454031545)36[&orientation=descendant]:0.012456359873891404)37[&orientation=descendant]:0.10644855947206608)38[&orientation=ancestor]:1.4662324768597312,((3[&orientation=ancestor]:0.03198743110181431,8[&orientation=descendant]:0.03198743110181431)39[&orientation=ancestor]:1.3109535692572567,((((11[&orientation=ancestor]:0.03447662696321169,18[&orientation=descendant]:0.03447662696321169)40[&orientation=ancestor]:0.02059299708723901,9[&orientation=descendant]:0.0550696240504507)41[&orientation=ancestor]:0.015900478002751142,(2[&orientation=ancestor]:0.04134960613162187,14[&orientation=descendant]:0.04134960613162187)42[&orientation=descendant]:0.02962049592157997)43[&orientation=ancestor]:0.03766954738927364,12[&orientation=descendant]:0.10863964944247548)44[&orientation=descendant]:1.2343013509165954)45[&orientation=descendant]:0.4081364803869332)46[&orientation=ancestor]:5.289875539993948,(26[&orientation=ancestor]:1.1068911236931251,(28[&range=Pygoscelis_grandis,orientation=descendant]:3.0,27[&orientation=descendant]:0.0)47[&orientation=descendant]:0.2068911236931248)48[&orientation=descendant]:0.8340618970468272)49[&orientation=ancestor]:2.0330478918722186,25[&orientation=descendant]:0.024000912612169856)50[&orientation=ancestor]:0.04475024156824503,(22[&range=Spheniscus_urbinai,orientation=descendant]:3.0,21[&orientation=descendant]:0.0)51[&orientation=descendant]:0.1187511541804156)52[&orientation=ancestor]:4.629639698471621,(16[&orientation=ancestor]:0.634308439006011,(24[&range=Spheniscus_megaramphus,orientation=descendant]:2.4800000000000004,23[&orientation=descendant]:0.0)53[&orientation=descendant]:0.634308439006011)54[&orientation=descendant]:3.1140824136460257)55[&orientation=ancestor]:0.0;
+End;
