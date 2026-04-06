@@ -1,4 +1,4 @@
-<project default="build" basedir=".">
+<project default="build" basedir="." name="srange">
 
     <!-- Source, JUnit test code and jar library locations. -->
     <property name="src" location="src"/>
@@ -291,6 +291,12 @@
                 <pathelement path="${build}" />
                 <pathelement path="${build-test}" />
                 <fileset dir="${build-lib}" includes="*.jar"/>
+
+                <pathelement path="${user.home}/.beast/2.7/SA/lib/SA.v2.1.1.jar"/>
+                <pathelement path="${user.home}/.beast/2.7/MM/lib/MM.addon.jar"/>
+                <pathelement path="${user.home}/.beast/2.7/sRanges/lib/SRanges.v0.1.0.jar"/>
+
+                <pathelement path="${user.home}/.beast/2.7/BEAST.base/lib/BEAST.base.jar"/>
             </classpath>
             <batchtest fork="yes" todir="${test-reports}">
                 <fileset dir="${test}">

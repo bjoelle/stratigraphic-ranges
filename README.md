@@ -8,6 +8,7 @@
 - [Model Features](#model-features)
   - [Tree Encoding](#tree-encoding)
   - [Clock and Substitution Models](#clock-and-substitution-models)
+- [Test](#test)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -132,6 +133,24 @@ Clock and substitution models implemented in BEAST2 are allowed.
 ## For developers
 
 ### Repository structure
+
+### Test
+
+Packages below must be installed in _$HOME/.beast_ before running the tests:
+
+- morph-models
+- sampled-ancestors
+- stratigraphic-ranges (this package)
+
+For details about versions, see _version.xml_ file.
+
+To run tests, do:
+
+```
+$ ant test
+```
+
+Test results will be stored in _test-reports_ folder.
 
 ### Contributing
 

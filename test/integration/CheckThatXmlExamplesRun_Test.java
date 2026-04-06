@@ -1,4 +1,4 @@
-package test.integration;
+package integration;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
