@@ -130,27 +130,38 @@ Note that while trees are logged with correct node orientation, metadata should 
 
 Clock and substitution models implemented in BEAST2 are allowed.
 
-## For developers
+## Test
 
-### Repository structure
+### Test environment setup
 
-### Test
-
-Packages below must be installed in _$HOME/.beast_ before running the tests:
+#### Install the following packages in _$HOME/.beast_ using _Beauti package manager_
 
 - morph-models
 - sampled-ancestors
-- stratigraphic-ranges (this package)
+- stratigraphic-ranges
 
 For details about versions, see _version.xml_ file.
 
-To run tests, do:
+#### Clone the following repositories
+
+- https://github.com/CompEvol/beast2 (HEAD)
+- https://github.com/CompEvol/BeastFX (HEAD)
+- https://github.com/BEAST2-Dev/BEASTLabs.git (42bde4d6dcee76c4a631e0855ce6b3e31cda129c)
+- https://github.com/CompEvol/sampled-ancestors.git (8190f50c0e8efb9aed64f025cc9620cc0c4d770e)
+- https://github.com/jugne/stratigraphic-ranges (HEAD)
+
+### Test run
 
 ```
+$ cd stratigraphic-ranges
 $ ant test
 ```
 
 Test results will be stored in _test-reports_ folder.
+
+## For developers
+
+### Repository structure
 
 ### Contributing
 
