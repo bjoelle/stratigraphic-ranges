@@ -157,7 +157,7 @@ $ cd stratigraphic-ranges
 $ ant test
 ```
 
-Test results will be stored in _test-reports_ folder.
+Tests results will be stored in _test-reports_ folder.
 
 ## For developers
 
