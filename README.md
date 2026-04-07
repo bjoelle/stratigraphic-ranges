@@ -134,15 +134,15 @@ Clock and substitution models implemented in BEAST2 are allowed.
 
 ### Test environment setup
 
-#### Install the following packages in _$HOME/.beast_ using _Beauti package manager_
+Install the following packages in _$HOME/.beast_ using _Beauti package manager_:
 
 - morph-models
 - sampled-ancestors
 - stratigraphic-ranges
 
-For details about versions, see _version.xml_ file.
+(for details about packages version, see _version.xml_ file)
 
-#### Clone the following repositories
+Clone the following repositories:
 
 - https://github.com/CompEvol/beast2 (HEAD)
 - https://github.com/CompEvol/BeastFX (HEAD)
@@ -150,7 +150,7 @@ For details about versions, see _version.xml_ file.
 - https://github.com/CompEvol/sampled-ancestors.git (8190f50c0e8efb9aed64f025cc9620cc0c4d770e)
 - https://github.com/jugne/stratigraphic-ranges (HEAD)
 
-### Test run
+### Tests execution
 
 ```
 $ cd stratigraphic-ranges
