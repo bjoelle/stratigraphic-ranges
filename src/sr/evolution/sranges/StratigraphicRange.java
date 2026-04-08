@@ -3,7 +3,6 @@ package sr.evolution.sranges;
 import beast.base.core.BEASTObject;
 import beast.base.core.Input;
 import beast.base.evolution.alignment.Taxon;
-import beast.base.evolution.tree.Node;
 import sr.evolution.tree.SRTree;
 
 import java.util.ArrayList;
@@ -154,16 +153,6 @@ public class StratigraphicRange extends BEASTObject {
             }
         }
         return internalNodeNrs;
-    }
-    
-    public List<Integer> getBranchingNodeNrs(SRTree tree) {
-        List<Integer> branchingNodeNrs = new ArrayList<>();
-        for (int i=1; i< nodes.size(); i++) {
-        	Node n = tree.getNode(nodes.get(i));
-            if (n.isLeaf()) continue;
-            branchingNodeNrs.add(nodes.get(i));
-        }
-        return branchingNodeNrs;
     }
 
     public void setFirstOccurrenceID(String ID) {

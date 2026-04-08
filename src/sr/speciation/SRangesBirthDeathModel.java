@@ -7,6 +7,7 @@ import beast.base.core.Description;
 
 import sa.evolution.speciation.SABirthDeathModel;
 import sa.evolution.tree.TreeWOffset;
+import sr.evolution.tree.SRNode;
 import sr.evolution.tree.SRTree;
 import sr.evolution.sranges.StratigraphicRange;
 
@@ -66,7 +67,7 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
 		} else {
 			if (parent.isFake()) {
 				return parent;
-			} else if (parent.getChild(0) == node) {
+			} else if (parent.getChild(0) == node && ((SRNode) parent).isBudding()) {
 				return findAncestralRangeLastNode(parent);
 			} else {
 				return null;

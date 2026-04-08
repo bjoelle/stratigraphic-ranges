@@ -11,6 +11,8 @@ import java.util.TreeMap;
  * @author Ugne Stolz
  */
 public class SRNode extends Node {
+	
+	private boolean budding = true;
 
     /**
      * @return (deep) copy of node
@@ -22,6 +24,7 @@ public class SRNode extends Node {
         node.metaDataString = metaDataString;
         node.metaData = new TreeMap<>(metaData);
         node.parent = null;
+        node.budding = budding;
         node.setID(getID());
 
         for (final Node child : getChildren()) {
@@ -70,4 +73,12 @@ public class SRNode extends Node {
         buf.append(":").append(getNewickLengthMetaData()).append(getLength());
         return buf.toString();
     }
+
+	public boolean isBudding() {
+		return budding;
+	}
+
+	public void setBudding(boolean budding) {
+		this.budding = budding;
+	}
 }

@@ -3,8 +3,7 @@ package sr.speciation;
 import beast.base.core.Input;
 import beast.base.evolution.tree.Node;
 import beast.base.inference.parameter.RealParameter;
-import sr.evolution.sranges.StratigraphicRange;
-import sr.evolution.tree.SRTree;
+import sr.evolution.tree.SRNode;
 
 public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	public Input<RealParameter> anagenesisRateInput =
@@ -13,8 +12,7 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 			new Input<RealParameter>("symProportion", "Proportion of symmetric birth, default 0.0", new RealParameter("0.0"));
 
 	private RealParameter anagenesisRate, symProportion;
-	private int nKnownAsymNodes;
-
+	
 	@Override
 	public void initAndValidate() {
 		super.initAndValidate();
@@ -37,25 +35,8 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	}
 	
 	@Override
-	protected double birthNodeContribution(Node node) {
-		double pAsym = lambda * (1 - symProportion.getValue());
-		if(((SRTree) SRcombinedTree.getTree()).getRangeOfNode(node) != null) return Math.log(pAsym);
-		
-		//System.out.println("Unknown asym status - node " + node.getNr()); //TODO remove check once verified
-		double pSym = lambda * symProportion.getValue();
-		int nBranchingNodes = SRcombinedTree.getTree().getInternalNodeCount() - SRcombinedTree.getTree().getDirectAncestorNodeCount();
-		double pUnknSym = symProportion.getValue() * nBranchingNodes / (nBranchingNodes - nKnownAsymNodes);
-		return Math.log((1 - pUnknSym) * pAsym + pUnknSym * pSym);
-	}
-	
-	@Override
-	protected void updateParameters() {
-		super.updateParameters();
-		
-		SRTree tree = (SRTree) SRcombinedTree.getTree();
-		nKnownAsymNodes = 0;
-		for (StratigraphicRange range : tree.getSRanges()) {
-			nKnownAsymNodes += range.getBranchingNodeNrs(tree).size();
-		}
+	protected double birthNodeContribution(Node node) {		
+		if(((SRNode) node).isBudding()) return Math.log(lambda) + Math.log(1 - symProportion.getValue());
+		return Math.log(lambda) + Math.log(symProportion.getValue());
 	}
 }
