@@ -7,9 +7,7 @@ import beast.base.util.Randomizer;
 
 import java.util.ArrayList;
 
-/**
- * @author Alexandra Gavryushkina
- */
+
 public class MixedSpeciationSwap extends SRTreeOperator {
 
     @Override
