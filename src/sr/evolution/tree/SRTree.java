@@ -280,6 +280,7 @@ public class SRTree extends Tree implements TreeInterface {
     protected void store() {
         storeNodes(0, nodeCount);
         storedRoot = m_storedNodes[root.getNr()];
+        
         for (StratigraphicRange range_src:sRanges) {
             int index = sRanges.indexOf(range_src);
             StratigraphicRange range_sink = storedSRanges.get(index);
@@ -336,6 +337,8 @@ public class SRTree extends Tree implements TreeInterface {
                     //sink.addChild(c);
                 }
             }
+            
+            sink.budding = src.budding;
         }
     }
 

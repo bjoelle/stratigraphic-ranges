@@ -12,7 +12,7 @@ import java.util.TreeMap;
  */
 public class SRNode extends Node {
 	
-	private boolean budding = true;
+	boolean budding = true;
 
     /**
      * @return (deep) copy of node
@@ -79,6 +79,7 @@ public class SRNode extends Node {
 	}
 
 	public void setBudding(boolean budding) {
+		startEditing();
 		this.budding = budding;
 	}
 }

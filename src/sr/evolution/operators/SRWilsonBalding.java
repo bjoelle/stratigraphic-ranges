@@ -48,15 +48,13 @@ public class SRWilsonBalding extends SRTreeOperator {
                 allowableNodeIndices.add(index);
         }
 
-        Node i;
-
         int allowableNodeCount = allowableNodeIndices.size();
 
         if (allowableNodeCount == 0) {
             return Double.NEGATIVE_INFINITY;
         }
 
-        i=tree.getNode(allowableNodeIndices.get(Randomizer.nextInt(allowableNodeCount)));
+        Node i = tree.getNode(allowableNodeIndices.get(Randomizer.nextInt(allowableNodeCount)));
 
         Node iP = i.getParent();
         Node CiP;
@@ -164,8 +162,6 @@ public class SRWilsonBalding extends SRTreeOperator {
         }
 
         Node PiP = iP.getParent();
-
-
 
         //Hastings denominator calculation
         if (CiP.isDirectAncestor()) {
