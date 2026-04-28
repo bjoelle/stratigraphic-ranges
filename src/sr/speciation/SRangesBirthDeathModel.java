@@ -48,7 +48,7 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
 		return Math.log(q(t,c1,c2));
 	}
 
-	private double q_tilde(double t, double c1, double c2) {
+	protected double q_tilde(double t) {
 		return Math.sqrt(Math.exp(-t*(lambda + mu + psi))*q(t,c1,c2));
 	}
 
@@ -169,7 +169,7 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
 			if (ancestralLast != null) {
 				double tOld = SRcombinedTree.getHeightOfNode(ancestralLast.getNr());
 				double tYoung = SRcombinedTree.getHeightOfNode(first.getNr());
-				logP += Math.log(1-q(tYoung, c1, c2)/q_tilde(tYoung, c1, c2)*q_tilde(tOld, c1, c2)/q(tOld, c1, c2));
+				logP += Math.log(1-q(tYoung, c1, c2)/q_tilde(tYoung)*q_tilde(tOld)/q(tOld, c1, c2));
 			}
 		}
 		return logP;

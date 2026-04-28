@@ -35,6 +35,13 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	}
 	
 	@Override
+	protected double q_tilde(double t) {
+		double qt = Math.pow(super.q_tilde(t), 1 - symProportion.getValue()); 
+		qt *= Math.exp(- t * (anagenesisRate.getValue() + symProportion.getValue() * (lambda + mu + psi)));
+		return qt;
+	}
+	
+	@Override
 	protected double birthNodeContribution(Node node) {		
 		if(((SRNode) node).isBudding()) return Math.log(lambda) + Math.log(1 - symProportion.getValue());
 		return Math.log(lambda) + Math.log(symProportion.getValue());
