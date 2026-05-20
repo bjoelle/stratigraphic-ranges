@@ -159,6 +159,12 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
 
 		// integrate over fossils in the range. This seems to suggest that we take out the psi in the previous equations
 		for (StratigraphicRange range:((SRTree)tree).getSRanges()) {
+			for(int n : range.getNodeNrs()) {
+				if(!((SRNode) tree.getNode(n)).isBudding()) {
+					System.out.println(n);
+				}
+			}
+			
 			Node first =  tree.getNode(range.getNodeNrs().get(0));
 			if (!range.isSingleFossilRange()) {
 				double tFirst = SRcombinedTree.getHeightOfNode(first.getNr());

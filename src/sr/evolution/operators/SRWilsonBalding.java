@@ -27,7 +27,6 @@ public class SRWilsonBalding extends SRTreeOperator {
     public double proposal() {
 
         SRTree tree = (SRTree) InputUtil.get(treeInput, this);
-        //double x0 = 10;
 
         double oldMinAge, newMinAge, newRange, oldRange, newAge, fHastingsRatio, dimensionCoefficient, orientationCoefficient;
         int newDimension, oldDimension;
@@ -44,7 +43,7 @@ public class SRWilsonBalding extends SRTreeOperator {
             // stratigraphic range
 
             if (!node.isRoot() && !node.isDirectAncestor() && !sRangeInternalNodeNrs.contains(node.getNr())
-                && !(node.isFake()&&sRangeInternalNodeNrs.contains(node.getDirectAncestorChild().getNr())))
+                && !(node.isFake() && sRangeInternalNodeNrs.contains(node.getDirectAncestorChild().getNr())))
                 allowableNodeIndices.add(index);
         }
 
