@@ -160,8 +160,9 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
 		// integrate over fossils in the range. This seems to suggest that we take out the psi in the previous equations
 		for (StratigraphicRange range:((SRTree)tree).getSRanges()) {
 			for(int n : range.getNodeNrs()) {
-				if(!((SRNode) tree.getNode(n)).isBudding()) {
-					System.out.println(n);
+				if(!((SRNode) tree.getNode(n)).isBudding() || (!tree.getNode(n).isLeaf() && !tree.getNode(n).isFake() &&
+						((SRTree)tree).getSharedRange(n, tree.getNode(n).getLeft().getNr()) == null)) {
+					throw new IllegalStateException("Budding flags and/or orientation is wrong");
 				}
 			}
 			
