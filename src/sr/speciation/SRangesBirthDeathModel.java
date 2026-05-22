@@ -161,7 +161,8 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
 		for (StratigraphicRange range:((SRTree)tree).getSRanges()) {
 			for(int n : range.getNodeNrs()) {
 				if(!((SRNode) tree.getNode(n)).isBudding() || (!tree.getNode(n).isLeaf() && !tree.getNode(n).isFake() &&
-						((SRTree)tree).getSharedRange(n, tree.getNode(n).getLeft().getNr()) == null)) {
+						((SRTree)tree).getSharedRange(n, tree.getNode(n).getLeft().getNr()) == null) || 
+						(tree.getNode(n).isDirectAncestor() && !((SRNode) tree.getNode(n).getParent()).isBudding())) {
 					throw new IllegalStateException("Budding flags and/or orientation is wrong");
 				}
 			}

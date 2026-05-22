@@ -232,6 +232,7 @@ public class SRWilsonBalding extends SRTreeOperator {
 			} else {
 				iP.setLeft(i);
 				iP.setRight(j);
+				if (attachingToLeaf) ((SRNode) iP).setBudding(true);
 			}
 			iP.makeDirty(Tree.IS_FILTHY);
 			j.makeDirty(Tree.IS_FILTHY);
@@ -243,6 +244,7 @@ public class SRWilsonBalding extends SRTreeOperator {
 					//otherwise choose randomly
 					iP.setLeft(CiP);
 					iP.setRight(i);
+					if (attachingToSRange) ((SRNode) iP).setBudding(true);
 				} else {
 					iP.setLeft(i);
 					iP.setRight(CiP);
@@ -251,6 +253,7 @@ public class SRWilsonBalding extends SRTreeOperator {
 			if (CiP.getNr() == j.getNr()) {//in special case 2: always make i left
 				iP.setLeft(i);
 				iP.setRight(CiP);
+				if (attachingToLeaf) ((SRNode) iP).setBudding(true);
 			}
 		}
 		iP.setHeight(newAge);
@@ -275,7 +278,7 @@ public class SRWilsonBalding extends SRTreeOperator {
 			Node node = tree.getNode(index);
 			//the node is not the root, it is not a sampled ancestor on a zero branch, it is not an internal node of a stratigraphic range
 			if (!node.isRoot() && !node.isDirectAncestor() && !sRangeInternalNodeNrs.contains(node.getNr())
-					&& !(node.isFake()&&sRangeInternalNodeNrs.contains(node.getDirectAncestorChild().getNr())))
+					&& !(node.isFake()&& sRangeInternalNodeNrs.contains(node.getDirectAncestorChild().getNr())))
 				newDimension++;
 		}
 		dimensionCoefficient = (double) oldDimension / newDimension;
