@@ -17,8 +17,11 @@ import java.util.ArrayList;
  */
 public class SRWilsonBalding extends SRTreeOperator {
 
+	private boolean useMixedSpeciation;
+
 	@Override
 	public void initAndValidate() {
+		useMixedSpeciation = treeInput.get().useMixedSpeciationInput.get();
 	}
 
 	/**
@@ -29,7 +32,7 @@ public class SRWilsonBalding extends SRTreeOperator {
 
 		SRTree tree = (SRTree) InputUtil.get(treeInput, this);
 
-		double oldMinAge, newMinAge, newRange, oldRange, newAge, fHastingsRatio, dimensionCoefficient, orientationCoefficient;
+		double oldMinAge, newMinAge, newRange, oldRange, newAge, fHastingsRatio, dimensionCoefficient, orientationCoefficient = 1.0, mixedCoefficient = 1.0;
 		int newDimension, oldDimension;
 
 		// choose a random node avoiding root and leaves that are direct ancestors
@@ -115,7 +118,6 @@ public class SRWilsonBalding extends SRTreeOperator {
 		}
 
 		oldDimension = allowableNodeCount;
-		orientationCoefficient = 1.0;
 		StratigraphicRange pruningRange = null;
 		StratigraphicRange attachingRange = null;
 
@@ -224,27 +226,33 @@ public class SRWilsonBalding extends SRTreeOperator {
 			}
 			
 			j.setParent(iP);
-			if (!attachingToSRange && !attachingToLeaf) randomAttach = true;
+			if (!attachingToSRange && !attachingToLeaf) {
+				randomAttach = true;
+				if(useMixedSpeciation) ((SRNode) iP).setBudding(Randomizer.nextBoolean());
+			}
 			if (attachingToSRange || (!attachingToLeaf && Randomizer.nextBoolean())) {
 				iP.setLeft(j);
 				iP.setRight(i);
-				if (attachingToSRange) ((SRNode) iP).setBudding(true);
+				if (attachingToSRange && useMixedSpeciation) ((SRNode) iP).setBudding(true);
 			} else {
 				iP.setLeft(i);
 				iP.setRight(j);
-				if (attachingToLeaf) ((SRNode) iP).setBudding(true);
+				if (attachingToLeaf && useMixedSpeciation) ((SRNode) iP).setBudding(true);
 			}
 			iP.makeDirty(Tree.IS_FILTHY);
 			j.makeDirty(Tree.IS_FILTHY);
 		} else {
 			if (iP.getNr() == j.getNr()) {
-				if (!attachingToSRange) randomAttach = true;
+				if (!attachingToSRange) {
+					randomAttach = true;
+					if(useMixedSpeciation) ((SRNode) iP).setBudding(Randomizer.nextBoolean());
+				}
 				if (attachingToSRange || Randomizer.nextBoolean()) { //in special case 1: when attaching to the range
 					//make i right
 					//otherwise choose randomly
 					iP.setLeft(CiP);
 					iP.setRight(i);
-					if (attachingToSRange) ((SRNode) iP).setBudding(true);
+					if (attachingToSRange && useMixedSpeciation) ((SRNode) iP).setBudding(true);
 				} else {
 					iP.setLeft(i);
 					iP.setRight(CiP);
@@ -253,7 +261,7 @@ public class SRWilsonBalding extends SRTreeOperator {
 			if (CiP.getNr() == j.getNr()) {//in special case 2: always make i left
 				iP.setLeft(i);
 				iP.setRight(CiP);
-				if (attachingToLeaf) ((SRNode) iP).setBudding(true);
+				if (attachingToLeaf && useMixedSpeciation) ((SRNode) iP).setBudding(true);
 			}
 		}
 		iP.setHeight(newAge);
@@ -267,9 +275,15 @@ public class SRWilsonBalding extends SRTreeOperator {
 		}
 		if (randomAttach) {
 			orientationCoefficient *= 2.0;
+			if(useMixedSpeciation) {
+				mixedCoefficient *= 2.0;
+			}
 		}
 		if (randomPrune) {
 			orientationCoefficient *= 0.5;
+			if(useMixedSpeciation) {
+				mixedCoefficient *= 0.5;
+			}		
 		}
 
 		newDimension = 0;
@@ -283,7 +297,7 @@ public class SRWilsonBalding extends SRTreeOperator {
 		}
 		dimensionCoefficient = (double) oldDimension / newDimension;
 
-		fHastingsRatio = Math.abs(orientationCoefficient * dimensionCoefficient * newRange / oldRange);
+		fHastingsRatio = Math.abs(mixedCoefficient * orientationCoefficient * dimensionCoefficient * newRange / oldRange);
 
 		return Math.log(fHastingsRatio);
 

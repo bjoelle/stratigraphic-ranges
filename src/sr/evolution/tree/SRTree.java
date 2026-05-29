@@ -26,6 +26,8 @@ public class SRTree extends Tree implements TreeInterface {
     public Input<List<StratigraphicRange>> stratigraphicRangeInput = new Input<>("stratigraphicRange", "all stratigraphic ranges", new ArrayList<>());
 
     public Input<Tree> treeInput = new Input<>("tree", "tree to start with");
+    
+    public Input<Boolean> useMixedSpeciationInput = new Input<>("mixed", "whether to account for mixed speciation, default false", false);
 
     protected ArrayList<StratigraphicRange> sRanges;
     protected ArrayList<StratigraphicRange> storedSRanges;
