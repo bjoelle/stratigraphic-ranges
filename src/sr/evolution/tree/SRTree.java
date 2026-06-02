@@ -365,20 +365,6 @@ public class SRTree extends Tree implements TreeInterface {
         }
         initArrays();
         orientateTree();
-//        for (StratigraphicRange range : this.getSRanges()) {
-//            int firstNr = range.getNodeNrs().get(0);
-//            Node first = this.getNode(range.getNodeNrs().get(0));
-//            first = first.isDirectAncestor() ? first.getParent() : first;
-//            Node last = this.getNode(range.getNodeNrs().get(range.getNodeNrs().size() - 1));
-//            while (!range.isSingleFossilRange() && firstNr !=last.getNr()){
-//                if (first.isLeaf())
-//                    System.out.println();
-//                int nr = first.getLeft().isFake() ? first.getLeft().getDirectAncestorChild().getNr(): first.getLeft().getNr();
-//                range.addNodeNrAfter(this, first.getNr(), nr);
-//                firstNr = nr;
-//                first = this.getNode(nr).isDirectAncestor() ? this.getNode(nr).getParent(): this.getNode(nr);
-//            }
-//        }
     }
 
     @Override
@@ -512,7 +498,7 @@ public class SRTree extends Tree implements TreeInterface {
     }
 
     /**
-     * Add orientation metadata to each node. Left (0) child is always a ancestor species.
+     * Add orientation metadata to each node. If the node is budding, then left (0) child is always a ancestor species.
      * Right (1) child is always a descendant species. Allows for: - tree state to be stored
      * and restored from file even when BEAST applies sorting. - metadata can be
      * used to color the output tree lineages for donors and recipients.
@@ -531,15 +517,22 @@ public class SRTree extends Tree implements TreeInterface {
                 subRoot.getRight().metaDataString = subRoot.metaDataString;
             } else if (subRoot.getChildCount()==1){
                 subRoot.getLeft().metaDataString = subRoot.metaDataString;
-            } else {
+            } else if(((SRNode) subRoot).isBudding()) {
                 subRoot.getLeft().metaDataString = "orientation=ancestor";
                 subRoot.getRight().metaDataString = "orientation=descendant";
+            } else {
+            	subRoot.getLeft().metaDataString = "orientation=descendant";
+            	subRoot.getRight().metaDataString = "orientation=descendant";
             }
 
             addOrientationMetadataNode(subRoot.getLeft().getNr());
-            if(subRoot.getChildCount()!=1){
+            if(subRoot.getChildCount()!=1) {
                 addOrientationMetadataNode(subRoot.getRight().getNr());
             }
+        }
+        
+        if(useMixedSpeciationInput.get()) {
+        	subRoot.metaDataString = subRoot.metaDataString + ",budding=" + ((SRNode) subRoot).isBudding();
         }
     }
 
@@ -553,7 +546,7 @@ public class SRTree extends Tree implements TreeInterface {
         out.print("tree STATE_" + sample + " = ");
         // Don't sort, this can confuse CalculationNodes relying on the tree
         //tree.getRoot().sort();
-        final String newick = ((SRNode) tree.getRoot()).toShortNewickForLog(false);
+        final String newick = ((SRNode) tree.getRoot()).toShortNewickForLog(false, useMixedSpeciationInput.get());
         out.print(newick);
         out.print(";");
     }

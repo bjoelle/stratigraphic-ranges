@@ -4,6 +4,7 @@ import beast.base.core.Input;
 import beast.base.evolution.tree.Node;
 import beast.base.inference.parameter.RealParameter;
 import sr.evolution.tree.SRNode;
+import sr.evolution.tree.SRTree;
 
 public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	public Input<RealParameter> anagenesisRateInput =
@@ -16,6 +17,9 @@ public class MixedSRangesBirthDeathModel extends SRangesBirthDeathModel {
 	@Override
 	public void initAndValidate() {
 		super.initAndValidate();
+		
+		if(!((SRTree) SRcombinedTree.getTree()).useMixedSpeciationInput.get()) 
+			throw new IllegalArgumentException("Trying to use mixed speciation likelihood with non-mixed tree, please set mixed=true in the tree");
 
 		anagenesisRate = anagenesisRateInput.get();
 		if(anagenesisRate.getValue() < 0) throw new IllegalArgumentException("Anagenesis rate must be positive");

@@ -33,9 +33,6 @@ public class TreeWithMetadataLogger extends CalculationNode implements Loggable 
     final public Input<Boolean> logRangeNamesInput = new Input<>("logRangeNames",
             "If true, a unique name will be logger for each range. " +
                     "If false, metadata will only indicate that it's a range, without a name.", true);
-    
-    final public Input<Boolean> logSpeciationTypeInput = new Input<>("logSpeciationType",
-            "If true, will log whether branching nodes are budding or bifurcating.", false);
 
     final public Input<Boolean> relogInput = new Input<>("relog",
             "If true, this logger is run after the analysis completes. " +
@@ -44,7 +41,7 @@ public class TreeWithMetadataLogger extends CalculationNode implements Loggable 
 
     boolean someMetaDataNeedsLogging;
     boolean substitutions = false;
-    boolean relog, logRanges;
+    boolean relog, logRanges, logMode;
     private DecimalFormat df;
 
     @Override
@@ -52,8 +49,10 @@ public class TreeWithMetadataLogger extends CalculationNode implements Loggable 
         relog = relogInput.get();
         logRanges = logRangesInput.get();
         
+        logMode = srTreeInput.get().useMixedSpeciationInput.get(); 
+        
 		if (parameterInput.get().size() == 0 && clockModelInput.get() == null
-                && !logOrientationInput.get() && !logRangesInput.get() && !logSpeciationTypeInput.get()) {
+                && !logOrientationInput.get() && !logRangesInput.get() && !logMode) {
             someMetaDataNeedsLogging = false;
             return;
         }
@@ -210,12 +209,12 @@ public class TreeWithMetadataLogger extends CalculationNode implements Loggable 
 
 			if (logOrientationInput.get()) {
 				buf.append(node.metaDataString);
-				if(logSpeciationTypeInput.get()) {
+				if(logMode) {
 					buf.append(",");
 				}
             }
 			
-			if(logSpeciationTypeInput.get()) {
+			if(logMode) {
 				buf.append("budding=" + node.isBudding());
 			}
 

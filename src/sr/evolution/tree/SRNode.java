@@ -49,7 +49,7 @@ public class SRNode extends Node {
      *         so that it can be restored.
      */
 
-    public String toShortNewickForLog(final boolean printInternalNodeNumbers) {
+    public String toShortNewickForLog(final boolean printInternalNodeNumbers, boolean addBuddingInfo) {
         final StringBuilder buf = new StringBuilder();
 
         if (!isLeaf()) {
@@ -60,7 +60,7 @@ public class SRNode extends Node {
                     isFirst = false;
                 else
                     buf.append(",");
-                buf.append(((SRNode) child).toShortNewickForLog(printInternalNodeNumbers));
+                buf.append(((SRNode) child).toShortNewickForLog(printInternalNodeNumbers, addBuddingInfo));
             }
             buf.append(")");
         }
@@ -72,6 +72,18 @@ public class SRNode extends Node {
         buf.append(getNewickMetaData());
         buf.append(":").append(getNewickLengthMetaData()).append(getLength());
         return buf.toString();
+    }
+    
+    public String getNewickMetaData(boolean addBuddingInfo) {
+    	String metadata = "";
+        if (metaDataString != null) {
+        	metadata = "[&" + metaDataString;
+        	if(addBuddingInfo) metadata = metadata + ",budding=" + budding;
+        	metadata = metadata + ']';
+        } else if(addBuddingInfo) {
+        	metadata = "[&budding=" + budding + ']';
+        }
+		return metadata;
     }
 
 	public boolean isBudding() {
