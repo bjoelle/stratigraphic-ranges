@@ -359,12 +359,25 @@ public class SRTree extends Tree implements TreeInterface {
         }
         try {
             parser.offsetInput.setValue(0, parser);
-            setRoot(parser.parseNewick(newick));
+            Node XMLRoot = parser.parseNewick(newick);
+            m_nodes = new SRNode[nodeCount]; 
+    		initFromNode(XMLRoot, (SRNode) root);
+    		setRoot(root);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         initArrays();
         orientateTree();
+    }
+    
+    void initFromNode(Node node, SRNode srNode) {
+    	if(!node.isLeaf()) {
+    		initFromNode(node.getLeft(), new SRNode());
+    		initFromNode(node.getRight(), new SRNode());
+    	}
+    	srNode.assignFrom(m_nodes, node);
+    	m_nodes[node.getNr()] = srNode;
     }
 
     @Override

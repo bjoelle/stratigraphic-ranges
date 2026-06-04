@@ -209,14 +209,7 @@ public class TreeWithMetadataLogger extends CalculationNode implements Loggable 
 
 			if (logOrientationInput.get()) {
 				buf.append(node.metaDataString);
-				if(logMode) {
-					buf.append(",");
-				}
             }
-			
-			if(logMode) {
-				buf.append("budding=" + node.isBudding());
-			}
 
             buf.append(']');
         }
