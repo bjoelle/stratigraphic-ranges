@@ -99,15 +99,6 @@
 
 
             <!-- default tree prior -->
-            <!-- TAG084854IO0FOASN6RHF4PNANMWA - must be modified to switch between sr and mm priors -->
-            <!--
-            <plugin spec='YuleModel' id="YuleModel.t:$(n)" tree='@Tree.t:$(n)'>
-                <parameter name='birthDiffRate' id="birthRate.t:$(n)" value='1.0' estimate='true'/>
-            </plugin>
-            <prior id='YuleBirthRatePrior.t:$(n)' x='@birthRate.t:$(n)'>
-                <distr spec="beast.base.inference.distribution.Uniform" lower='0' upper='Infinity'/>
-            </prior>
-            -->
             <SRangesBirthDeathModel spec="sr.speciation.SRangesBirthDeathModel" id="GENERICSR.t:$(n)" tree="@Tree.t:$(n)" conditionOnRhoSampling="true">
                 <parameter name="origin" id="originGENERICSR.t:$(n)" value ="100.0" lower="0."/>
                 <parameter name="diversificationRate" id="diversificationRateGENERICSR.t:$(n)" value="1." lower="0."/>
@@ -144,9 +135,6 @@
             <operator id='SAUniformOperatorGENERICSR.t:$(n)' spec='sa.evolution.operators.SAUniform' weight="20" tree="@Tree.t:$(n)"/>
             -->
 
-            <!-- TAG084854IO0FOASN6RHF4PNANMWA - must be modified to switch between sr and mm priors -->
-            <!--
-            -->
             <operator id='SRLeafToSampledAncestorJump.t:$(n)' spec="sr.evolution.operators.SRLeafToSampledAncestorJump" weight="20" tree="@Tree.t:$(n)"/>
             <operator id='SRWilsonBalding.t:$(n)' spec='sr.evolution.operators.SRWilsonBalding' weight="20" tree="@Tree.t:$(n)"/>
             <operator id='LeftRightChildSwap.t:$(n)' spec='sr.evolution.operators.LeftRightChildSwap' weight="5" tree="@Tree.t:$(n)"/>
@@ -204,9 +192,6 @@
             <connect srcID='rhoScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator'     if='inposterior(GENERICSR.t:$(n)) and rhoGENERICSR.t:$(n)/estimate=true'/>
 
 
-            <!-- TAG084854IO0FOASN6RHF4PNANMWA - must be modified to switch between sr and mm priors -->
-            <!--
-            -->
             <connect srcID='SRLeafToSampledAncestorJump.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
             <connect srcID='SRWilsonBalding.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
             <connect srcID='LeftRightChildSwap.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
@@ -218,10 +203,6 @@
             <connect srcID='TreeScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
 
 
-            <!-- TAG084854IO0FOASN6RHF4PNANMWA - must be modified to switch between sr and mm priors -->
-            <!--
-            <connect srcID='YuleModel.t:$(n)' if="isInitializing" targetID='prior' inputName='distribution' />
-            -->
             <connect srcID='GENERICSR.t:$(n)' if="isInitializing" targetID='prior' inputName='distribution' />
             <!--
             <connect srcID='GENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(GENERICSR.t:$(n)) and inlikelihood(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
