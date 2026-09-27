@@ -96,4 +96,18 @@ public class Tools {
 		return new double[]{length, nodeCount};
 	}
 
+    public static boolean checkRangeConsistency(String firstOccurrenceID, String lastOccurrenceID) {
+        if (getAge(firstOccurrenceID).compareTo(getAge(lastOccurrenceID))<=0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // a_b_12.23 => 12.23
+    public static String getAge(String id) {
+        int i = id.lastIndexOf("_");
+        String age = id.substring(i+1);
+        return age;
+    }
 }

@@ -1,0 +1,12 @@
+Megadyptes_antipodes_0.0_first
+Megadyptes_antipodes_0.0_last
+Eudyptes_chrysolophus_0.0_first
+Eudyptes_sclateri_0.0_first
+Eudyptes_sclateri_0.0_last
+Eudyptula_minor_0.0_first
+Eudyptula_minor_0.0_last
+Madrynornis_mirandus_10.0_first
+Madrynornis_mirandus_10.0_last
+Spheniscus_demersus_0.0_last
+Spheniscus_demersus_0.0_first
+Eudyptes_chrysolophus_0.0_last

@@ -148,7 +148,7 @@ public class SRTree extends Tree implements TreeInterface {
                 }
             }
             if (!lastRanges.isEmpty()) {
-                throw new RuntimeException("There are taxa with last occurrence only " + lastRanges.toString() );
+                //throw new RuntimeException("There are taxa with last occurrence only " + lastRanges.toString() );
             }
             for (StratigraphicRange range:firstRanges) {
                 range.makeSingleFossilRange();

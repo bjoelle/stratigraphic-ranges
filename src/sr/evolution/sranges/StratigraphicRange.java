@@ -37,6 +37,19 @@ public class StratigraphicRange extends BEASTObject {
      */
     private List<Integer> nodes = new ArrayList<>();  //
 
+    public StratigraphicRange() {
+    }
+
+    public StratigraphicRange(String ID, Taxon firstOccurrenceTaxon, Taxon lastOccurrenceTaxon) {
+        this.setID(ID);
+
+        //this.firstOccurrenceID = firstOccurrenceID;
+        //this.lastOccurrenceID = lastOccurrenceID;
+
+        this.taxonFirstOccurrenceInput.setValue(firstOccurrenceTaxon,this);
+        this.taxonLastOccurrenceInput.setValue(lastOccurrenceTaxon,this);
+    }
+
     @Override
     public void initAndValidate() {
         if (taxonFirstOccurrenceInput.get() != null || taxonLastOccurrenceInput.get() != null) {
