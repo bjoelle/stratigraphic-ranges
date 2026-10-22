@@ -6,6 +6,7 @@ import beast.base.core.Description;
 
 
 import sa.evolution.speciation.SABirthDeathModel;
+import sa.evolution.tree.TreeWOffset;
 import sr.evolution.tree.SRTree;
 import sr.evolution.sranges.StratigraphicRange;
 
@@ -21,6 +22,29 @@ import sr.evolution.sranges.StratigraphicRange;
 @Citation("Gavryushkina A, Warnock RCM, Drummond AJ, Heath TA, Stadler T (2017) \n" +
         "Bayesian total-evidence dating under the fossilized birth-death model with stratigraphic ranges.")
 public class SRangesBirthDeathModel extends SABirthDeathModel {
+
+    /**
+     * Tips with height at or below this value are treated as sampled at present (rho sampling).
+     */
+    private static final double EXTANT_TIP_HEIGHT_THRESHOLD = 5e-12;
+
+    /**
+    * Tree with offset used for all node heights. SABirthDeathModel keeps its own copy in a
+    * package-private field (up to SA 2.1.1), which cannot be accessed from this package at run
+    * time (IllegalAccessError), so we keep our own handle and build it the same way SA does.
+    */
+    private TreeWOffset combinedTree;
+
+    @Override
+    public void initAndValidate() {
+        super.initAndValidate();
+        combinedTree = treeWOffsetInput.get();
+        if (combinedTree == null) {
+            combinedTree = new TreeWOffset();
+            combinedTree.setInputValue("tree", treeInput.get());
+            combinedTree.initAndValidate();
+        }
+    }
 
     @Override
     public double q(double t, double c1, double c2) {
@@ -112,7 +136,7 @@ public class SRangesBirthDeathModel extends SABirthDeathModel {
             if (node.isLeaf()) {
                 if  (!node.isDirectAncestor())  {
                     Node fossilParent = node.getParent();
-                    if (combinedTree.getHeightOfNode(i) > 0.000000000005 || rho == 0.) {
+                    if (combinedTree.getHeightOfNode(i) > EXTANT_TIP_HEIGHT_THRESHOLD || rho == 0.) {
 
                         if (((SRTree)tree).belongToSameSRange(i, fossilParent.getNr())) {
                             logP += Math.log(psi) - log_q_tilde(combinedTree.getHeightOfNode(i), c1, c2) + log_p0s(combinedTree.getHeightOfNode(i), c1, c2);
