@@ -19,60 +19,49 @@
            :beast.base.math.distributions'>
 
 <mergewith point='sr-align-trait-partitions-panels'>
-
         <subtemplate id='SRTrait' spec='beastfx.app.inputeditor.BeautiSubTemplate' class='beast.base.evolution.alignment.FilteredAlignment' mainid='$(n)'
         suppressInputs = 'morphmodels.evolution.substitutionmodel.LewisMK.stateNumber,
-			morphmodels.evolution.substitutionmodel.LewisMK.datatype,
-			morphmodels.evolution.substitutionmodel.LewisMK.frequencies,
-			morphmodels.evolution.substitutionmodel.LewisMK.proportionInvariant'>
+            morphmodels.evolution.substitutionmodel.LewisMK.datatype,
+            morphmodels.evolution.substitutionmodel.LewisMK.frequencies,
+            morphmodels.evolution.substitutionmodel.LewisMK.proportionInvariant'>
 
 <![CDATA[
             <!-- tree and its properties -->
             <taxonset id='TaxonSet.$(n)' spec='beast.base.evolution.alignment.TaxonSet' alignment='@$(n)' />
 
-
-            <!--
-            TAG638060GTI16TTBRN6V115XZOVH
-            <plugin spec='sr.evolution.tree.SRTree' id='Tree.t:$(n)'>
-            <plugin spec='sr.evolution.tree.SRTree' id='Tree.t:$(n)' estimate='true'>
-            <plugin spec='beast.base.evolution.tree.Tree' id='Tree.t:$(n)' estimate='true'>
-            -->
             <plugin spec='sr.evolution.tree.SRTree' id='Tree.t:$(n)'>
                 <taxonset idref='TaxonSet.$(n)'/>
             </plugin>
 
-            <!--
-            TAG196421105ZTNWWS59PZSGFXB8U
-            <plugin spec='beast.base.evolution.tree.coalescent.RandomTree' id='RandomTree.t:$(n)' estimate='false' initial='@Tree.t:$(n)'>
-            -->
             <plugin spec='sr.evolution.tree.RandomSRangeTree' id='RandomTree.t:$(n)' estimate='false' initial='@Tree.t:$(n)'>
                 <taxa idref='data'/>
                 <populationModel id='ConstantPopulation0.t:$(n)' spec='ConstantPopulation'>
-            		<popSize id='randomPopSize.t:$(n)' spec='parameter.RealParameter' value='1'/>
-	            </populationModel>
+                    <popSize id='randomPopSize.t:$(n)' spec='parameter.RealParameter' value='1'/>
+                </populationModel>
             </plugin>
 
             <plugin id='TreeHeight.t:$(n)' spec='beast.base.evolution.tree.TreeHeightLogger' tree='@Tree.t:$(n)'/>
 
             <logger id='treelog.t:$(n)' spec='beast.base.inference.Logger' logEvery="1000" fileName="$(tree).trees" mode='tree'>
-	            <log id='TreeWithMetaDataLogger.t:$(n)' spec='beast.base.evolution.TreeWithMetaDataLogger' tree='@Tree.t:$(n)'>
-	            </log>
+                <log id='TreeWithMetaDataLogger.t:$(n)' spec='beast.base.evolution.TreeWithMetaDataLogger' tree='@Tree.t:$(n)'>
+                </log>
             </logger>
 
-			<distribution id="morphTreeLikelihood.$(n)" spec='TreeLikelihood' tree='@Tree.t:$(n)'>
-				<data spec="beast.base.evolution.alignment.Alignment" id='$(n)'>
-					<userDataType spec='beast.base.evolution.datatype.StandardData' id='morphDataType.$(n)' />
-				</data>
-				<siteModel spec='SiteModel' id="SiteModel.s:$(n)" gammaCategoryCount='0'>
-				        <mutationRate        spec='parameter.RealParameter' id='mutationRate.s:$(n)' value='1.0' estimate='true'/>
-				        <shape               spec='parameter.RealParameter' id='gammaShape.s:$(n)' value='1.0' estimate='false'/>
+            <distribution id="morphTreeLikelihood.$(n)" spec='TreeLikelihood' tree='@Tree.t:$(n)'>
+                <data spec="beast.base.evolution.alignment.Alignment" id='$(n)'>
+                    <userDataType spec='beast.base.evolution.datatype.StandardData' id='morphDataType.$(n)' />
+                </data>
+                <siteModel spec='SiteModel' id="SiteModel.s:$(n)" gammaCategoryCount='0'>
+                    <mutationRate spec='parameter.RealParameter' id='mutationRate.s:$(n)' value='1.0' estimate='true'/>
+                    <shape spec='parameter.RealParameter' id='gammaShape.s:$(n)' value='1.0' estimate='false'/>
+
                     <!-- MK subst model -->
-					<substModel spec="morphmodels.evolution.substitutionmodel.LewisMK" id="LewisMK.s:$(n)" datatype='@morphDataType.$(n)'/>
-				</siteModel>
-				<branchRateModel id="StrictClock.c:$(n)" spec="beast.base.evolution.branchratemodel.StrictClockModel">
-					<parameter id="clockRate.c:$(n)" name="clock.rate" value="1.0" estimate='false'/>
-				</branchRateModel>
-			</distribution>
+                    <substModel spec="morphmodels.evolution.substitutionmodel.LewisMK" id="LewisMK.s:$(n)" datatype='@morphDataType.$(n)'/>
+                </siteModel>
+                <branchRateModel id="StrictClock.c:$(n)" spec="beast.base.evolution.branchratemodel.StrictClockModel">
+                    <parameter id="clockRate.c:$(n)" name="clock.rate" value="1.0" estimate='false'/>
+                </branchRateModel>
+            </distribution>
 
 
             <prior id='ClockPrior.c:$(n)' x='@clockRate.c:$(n)'>
@@ -99,141 +88,128 @@
 
 
             <!-- default tree prior -->
-            <SRangesBirthDeathModel spec="sr.speciation.SRangesBirthDeathModel" id="GENERICSR.t:$(n)" tree="@Tree.t:$(n)" conditionOnRhoSampling="true">
-                <parameter name="origin" id="originGENERICSR.t:$(n)" value ="100.0" lower="0."/>
-                <parameter name="diversificationRate" id="diversificationRateGENERICSR.t:$(n)" value="1." lower="0."/>
-                <parameter name="turnover" id="turnoverGENERICSR.t:$(n)" value=".5" lower="0." upper="1."/>
-                <parameter name="samplingProportion" id="samplingProportionGENERICSR.t:$(n)" value="0.5" lower="0." upper="1."/>
-                <parameter name="rho" id="rhoGENERICSR.t:$(n)" value="1.0" lower="0." upper = "1." estimate="false"/>
-                <parameter name="removalProbability" id="rGENERICSR.t:$(n)" value="0." lower="0." upper="1."/>
+            <SRangesBirthDeathModel spec="sr.speciation.SRangesBirthDeathModel" id="SRBDM.t:$(n)" tree="@Tree.t:$(n)" conditionOnRhoSampling="true">
+                <parameter name="origin" id="originSTRRA.t:$(n)" value ="100.0" lower="0."/>
+                <parameter name="diversificationRate" id="diversificationRateSTRRA.t:$(n)" value="1." lower="0."/>
+                <parameter name="turnover" id="turnoverSTRRA.t:$(n)" value=".5" lower="0." upper="1."/>
+                <parameter name="samplingProportion" id="samplingProportionSTRRA.t:$(n)" value="0.5" lower="0." upper="1."/>
+                <parameter name="rho" id="rhoSTRRA.t:$(n)" value="1.0" lower="0." upper = "1." estimate="false"/>
+                <parameter name="removalProbability" id="rSTRRA.t:$(n)" value="0." lower="0." upper="1."/>
             </SRangesBirthDeathModel>
-            <distribution id='originPriorGENERICSR.t:$(n)' spec='beast.base.inference.distribution.Prior' x="@originGENERICSR.t:$(n)">
+            <distribution id='originPriorSTRRA.t:$(n)' spec='beast.base.inference.distribution.Prior' x="@originSTRRA.t:$(n)">
                 <distr spec='beast.base.inference.distribution.Uniform' lower="0." upper="Infinity"/>
             </distribution>
-            <distribution id="diversificationRatePriorGENERICSR.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@diversificationRateGENERICSR.t:$(n)">
+            <distribution id="diversificationRatePriorSTRRA.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@diversificationRateSTRRA.t:$(n)">
                 <distr spec='beast.base.inference.distribution.Uniform' lower="0." upper="Infinity"/>
             </distribution>
-            <distribution id="turnoverPriorGENERICSR.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@turnoverGENERICSR.t:$(n)">
+            <distribution id="turnoverPriorSTRRA.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@turnoverSTRRA.t:$(n)">
                 <distr spec='beast.base.inference.distribution.Uniform' lower="0." upper="1."/>
             </distribution>
-            <distribution id="samplingProportionPriorGENERICSR.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@samplingProportionGENERICSR.t:$(n)">
+            <distribution id="samplingProportionPriorSTRRA.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@samplingProportionSTRRA.t:$(n)">
                 <distr spec='beast.base.inference.distribution.Uniform' lower="0." upper="1."/>
             </distribution>
-            <distribution id="rhoPriorGENERICSR.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@rhoGENERICSR.t:$(n)">
+            <distribution id="rhoPriorSTRRA.t:$(n)" spec="beast.base.inference.distribution.Prior" x="@rhoSTRRA.t:$(n)">
                 <distr spec='beast.base.inference.distribution.Uniform' lower="0." upper="1."/>
             </distribution>
-            <operator id='originScalerGENERICSR.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="3" parameter="@originGENERICSR.t:$(n)"/>
-            <operator id='divRateScalerGENERICSR.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="10" parameter="@diversificationRateGENERICSR.t:$(n)"/>
-            <operator id='turnoverScalerGENERICSR.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="10" parameter="@turnoverGENERICSR.t:$(n)"/>
-            <operator id='samplingPScalerGENERICSR.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="10" parameter="@samplingProportionGENERICSR.t:$(n)"/>
-            <operator id='rhoScalerGENERICSR.t:$(n)' spec='ScaleOperator' scaleFactor=".9" weight="1" parameter="@rhoGENERICSR.t:$(n)"/>
 
-            <!-- FIXME Multi-rate tree operators -->
 
-            <!-- FIXME -->
-            <!--
-            <operator id='SAUniformOperatorGENERICSR.t:$(n)' spec='sa.evolution.operators.SAUniform' weight="20" tree="@Tree.t:$(n)"/>
-            -->
+            <operator id='originScalerSTRRA.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="3" parameter="@originSTRRA.t:$(n)"/>
+            <operator id='divRateScalerSTRRA.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="10" parameter="@diversificationRateSTRRA.t:$(n)"/>
+            <operator id='turnoverScalerSTRRA.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="10" parameter="@turnoverSTRRA.t:$(n)"/>
+            <operator id='samplingPScalerSTRRA.t:$(n)' spec='ScaleOperator' scaleFactor=".75" weight="10" parameter="@samplingProportionSTRRA.t:$(n)"/>
+            <operator id='rhoScalerSTRRA.t:$(n)' spec='ScaleOperator' scaleFactor=".9" weight="1" parameter="@rhoSTRRA.t:$(n)"/>
 
             <operator id='SRLeafToSampledAncestorJump.t:$(n)' spec="sr.evolution.operators.SRLeafToSampledAncestorJump" weight="20" tree="@Tree.t:$(n)"/>
             <operator id='SRWilsonBalding.t:$(n)' spec='sr.evolution.operators.SRWilsonBalding' weight="20" tree="@Tree.t:$(n)"/>
-            <operator id='LeftRightChildSwap.t:$(n)' spec='sr.evolution.operators.LeftRightChildSwap' weight="5" tree="@Tree.t:$(n)"/>
-            <operator id='RootScalerGENERICSR.t:$(n)' spec='sa.evolution.operators.SAScaleOperator' scaleFactor=".95" weight="5" tree="@Tree.t:$(n)" rootOnly='true'/>
-            <operator id='TreeScalerGENERICSR.t:$(n)' spec='sa.evolution.operators.SAScaleOperator' scaleFactor=".95" weight="10" tree="@Tree.t:$(n)"/>
-            <plugin id='SRCountGENERICSR.t:$(n)' spec='sr.evolution.tree.SampledAncestorLogger' tree='@Tree.t:$(n)'/>
-
+            <operator id='LeftRightChildSwapSTRRA.t:$(n)' spec='sr.evolution.operators.LeftRightChildSwap' weight="5" tree="@Tree.t:$(n)"/>
+            <operator id='RootScalerSTRRA.t:$(n)' spec='sa.evolution.operators.SAScaleOperator' scaleFactor=".95" weight="5" tree="@Tree.t:$(n)" rootOnly='true'/>
+            <operator id='TreeScalerSTRRA.t:$(n)' spec='sa.evolution.operators.SAScaleOperator' scaleFactor=".95" weight="10" tree="@Tree.t:$(n)"/>
+            <plugin id='CountSTRRA.t:$(n)' spec='sr.evolution.tree.SampledAncestorLogger' tree='@Tree.t:$(n)'/>
 ]]>
-            <connect srcID='morphTreeLikelihood.$(n)'         targetID='likelihood' inputName='distribution' if="isInitializing"/>
+
+            <connect srcID='morphTreeLikelihood.$(n)' targetID='likelihood' inputName='distribution' if="isInitializing"/>
             <connect method="beastfx.app.inputeditor.SiteModelInputEditor.customConnector"/>
 
-            <connect srcID='treelog.t:$(n)'                   targetID='mcmc' inputName='logger' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='RandomTree.t:$(n)'                targetID='mcmc' inputName='init'   if='inposterior(Tree.t:$(n))'/>
+            <connect srcID='treelog.t:$(n)' targetID='mcmc' inputName='logger' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='RandomTree.t:$(n)' targetID='mcmc' inputName='init' if='inposterior(Tree.t:$(n))'/>
 
-            <connect srcID='ClockPrior.c:$(n)'                targetID='prior' inputName='distribution' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
+            <connect srcID='ClockPrior.c:$(n)' targetID='prior' inputName='distribution' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
+
             <!-- when FixMeanMutationRatesOperator, the prior is uniform due to the operator -->
-            <connect srcID='MutationRatePrior.s:$(n)'         targetID='prior' inputName='distribution' if='nooperator(FixMeanMutationRatesOperator) and inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'/>
+            <connect srcID='MutationRatePrior.s:$(n)' targetID='prior' inputName='distribution' if='nooperator(FixMeanMutationRatesOperator) and inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'/>
 
-            <connect srcID='Tree.t:$(n)'                      targetID='state' inputName='stateNode' if='inposterior(Tree.t:$(n))'/>
-            <connect srcID='mutationRate.s:$(n)'              targetID='state' inputName='stateNode' if='inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'/>
-            <connect srcID='gammaShape.s:$(n)'                targetID='state' inputName='stateNode' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'/>
-            <connect srcID='clockRate.c:$(n)'                 targetID='state' inputName='stateNode' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
-
-
-            <connect srcID='mutationRateScaler.s:$(n)'        targetID='mcmc' inputName='operator' if='nooperator(FixMeanMutationRatesOperator) and inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'>Scales mutation rate of partition s:$(n)</connect>
-            <connect srcID='gammaShapeScaler.s:$(n)'          targetID='mcmc' inputName='operator' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'>Scales gamma shape parameter of partition s:$(n)</connect>
-            <connect srcID='StrictClockRateScaler.c:$(n)'     targetID='mcmc' inputName='operator' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'>Scale clock rate of partition c:$(n)</connect>
-            <connect srcID='strictClockUpDownOperator.c:$(n)' targetID='mcmc' inputName='operator'
-                     if='nooperator(FixMeanRatesOperator) and inlikelihood(clockRate.c:$(n)) and inlikelihood(Tree.t:$(n)) and Tree.t:$(n)/estimate=true and clockRate.c:$(n)/estimate=true'>
-                Scale up substitution rate c:$(n) and scale down tree t:($n)
-            </connect>
-
-            <connect srcID='allTipDatesRandomWalker.t:$(n)'   targetID='mcmc' inputName='operator' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true and allTipDatesRandomWalker.t:$(n)/weight!=0.0'>Estimates tip dates for tree t:$(n)</connect>
-
-            <connect srcID='morphTreeLikelihood.$(n)'         targetID='tracelog' inputName='log' if='inlikelihood(morphTreeLikelihood.$(n))'/>
-            <connect srcID='TreeHeight.t:$(n)'                targetID='tracelog' inputName='log' if='inposterior(Tree.t:$(n))'/>
-            <connect srcID='mutationRate.s:$(n)'              targetID='tracelog' inputName='log' if='inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'/>
-            <connect srcID='gammaShape.s:$(n)'                targetID='tracelog' inputName='log' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'/>
-            <connect srcID='clockRate.c:$(n)'                 targetID='tracelog' inputName='log' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
-
-            <connect srcID='GammaShapePrior.s:$(n)'           targetID='prior' inputName='distribution' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'>Prior on gamma shape for partition s:$(n)</connect>
-
-            <connect srcID='originGENERICSR.t:$(n)' targetID='GENERICSR.t:$(n)' inputName='origin' if='GENERICSR.t:$(n)/conditionOnRoot=false'></connect>
-
-            <connect srcID='originPriorGENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(GENERICSR.t:$(n)) and originGENERICSR.t:$(n)/estimate=true and GENERICSR.t:$(n)/conditionOnRoot=false'>prior on originGENERICSR.t:$(n)</connect>
-            <connect srcID='diversificationRatePriorGENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(GENERICSR.t:$(n)) and diversificationRateGENERICSR.t:$(n)/estimate=true'>prior on diversificationRateGENERICSR.t:$(n)</connect>
-            <connect srcID='turnoverPriorGENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(GENERICSR.t:$(n)) and turnoverGENERICSR.t:$(n)/estimate=true'>prior on turnoverGENERICSR.t:$(n)</connect>
-            <connect srcID='samplingProportionPriorGENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(GENERICSR.t:$(n)) and samplingProportionGENERICSR.t:$(n)/estimate=true'>prior on samplingProportionGENERICSR.t:$(n)</connect>
-            <connect srcID='rhoPriorGENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(GENERICSR.t:$(n)) and rhoGENERICSR.t:$(n)/estimate=true'>prior on rGENERICSR.t:$(n)</connect>
-
-            <connect srcID='originScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator'     if='inposterior(GENERICSR.t:$(n)) and originGENERICSR.t:$(n)/estimate=true and GENERICSR.t:$(n)/conditionOnRoot=false'/>
-            <connect srcID='divRateScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator'     if='inposterior(GENERICSR.t:$(n)) and diversificationRateGENERICSR.t:$(n)/estimate=true'/>
-            <connect srcID='turnoverScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator'     if='inposterior(GENERICSR.t:$(n)) and turnoverGENERICSR.t:$(n)/estimate=true'/>
-            <connect srcID='samplingPScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator'     if='inposterior(GENERICSR.t:$(n)) and samplingProportionGENERICSR.t:$(n)/estimate=true'/>
-            <connect srcID='rhoScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator'     if='inposterior(GENERICSR.t:$(n)) and rhoGENERICSR.t:$(n)/estimate=true'/>
+            <connect srcID='Tree.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(Tree.t:$(n))'/>
+            <connect srcID='mutationRate.s:$(n)' targetID='state' inputName='stateNode' if='inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'/>
+            <connect srcID='gammaShape.s:$(n)' targetID='state' inputName='stateNode' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'/>
+            <connect srcID='clockRate.c:$(n)' targetID='state' inputName='stateNode' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
 
 
-            <connect srcID='SRLeafToSampledAncestorJump.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='SRWilsonBalding.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='LeftRightChildSwap.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='SRCountGENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n)) and inposterior(Tree.t:$(n))'/>
+            <connect srcID='mutationRateScaler.s:$(n)' targetID='mcmc' inputName='operator' if='nooperator(FixMeanMutationRatesOperator) and inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'>Scales mutation rate of partition s:$(n)</connect>
+            <connect srcID='gammaShapeScaler.s:$(n)' targetID='mcmc' inputName='operator' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'>Scales gamma shape parameter of partition s:$(n)</connect>
+            <connect srcID='StrictClockRateScaler.c:$(n)' targetID='mcmc' inputName='operator' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'>Scale clock rate of partition c:$(n)</connect>
+            <connect srcID='strictClockUpDownOperator.c:$(n)' targetID='mcmc' inputName='operator' if='nooperator(FixMeanRatesOperator) and inlikelihood(clockRate.c:$(n)) and inlikelihood(Tree.t:$(n)) and Tree.t:$(n)/estimate=true and clockRate.c:$(n)/estimate=true'> Scale up substitution rate c:$(n) and scale down tree t:($n) </connect>
+
+            <connect srcID='allTipDatesRandomWalker.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true and allTipDatesRandomWalker.t:$(n)/weight!=0.0'>Estimates tip dates for tree t:$(n)</connect>
+
+            <connect srcID='morphTreeLikelihood.$(n)' targetID='tracelog' inputName='log' if='inlikelihood(morphTreeLikelihood.$(n))'/>
+            <connect srcID='TreeHeight.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(Tree.t:$(n))'/>
+            <connect srcID='mutationRate.s:$(n)' targetID='tracelog' inputName='log' if='inlikelihood(mutationRate.s:$(n)) and mutationRate.s:$(n)/estimate=true'/>
+            <connect srcID='gammaShape.s:$(n)' targetID='tracelog' inputName='log' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'/>
+            <connect srcID='clockRate.c:$(n)' targetID='tracelog' inputName='log' if='inlikelihood(clockRate.c:$(n)) and clockRate.c:$(n)/estimate=true'/>
+
+            <connect srcID='GammaShapePrior.s:$(n)' targetID='prior' inputName='distribution' if='inlikelihood(gammaShape.s:$(n)) and gammaShape.s:$(n)/estimate=true'>Prior on gamma shape for partition s:$(n)</connect>
+
+            <connect srcID='originSTRRA.t:$(n)' targetID='SRBDM.t:$(n)' inputName='origin' if='SRBDM.t:$(n)/conditionOnRoot=false'></connect>
+
+            <connect srcID='originPriorSTRRA.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(SRBDM.t:$(n)) and originSTRRA.t:$(n)/estimate=true and SRBDM.t:$(n)/conditionOnRoot=false'>prior on originSTRRA.t:$(n)</connect>
+            <connect srcID='diversificationRatePriorSTRRA.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(SRBDM.t:$(n)) and diversificationRateSTRRA.t:$(n)/estimate=true'>prior on diversificationRateSTRRA.t:$(n)</connect>
+            <connect srcID='turnoverPriorSTRRA.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(SRBDM.t:$(n)) and turnoverSTRRA.t:$(n)/estimate=true'>prior on turnoverSTRRA.t:$(n)</connect>
+            <connect srcID='samplingProportionPriorSTRRA.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(SRBDM.t:$(n)) and samplingProportionSTRRA.t:$(n)/estimate=true'>prior on samplingProportionSTRRA.t:$(n)</connect>
+            <connect srcID='rhoPriorSTRRA.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(SRBDM.t:$(n)) and rhoSTRRA.t:$(n)/estimate=true'>prior on rSTRRA.t:$(n)</connect>
+
+            <connect srcID='originScalerSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and originSTRRA.t:$(n)/estimate=true and SRBDM.t:$(n)/conditionOnRoot=false'/>
+            <connect srcID='divRateScalerSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and diversificationRateSTRRA.t:$(n)/estimate=true'/>
+            <connect srcID='turnoverScalerSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and turnoverSTRRA.t:$(n)/estimate=true'/>
+            <connect srcID='samplingPScalerSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and samplingProportionSTRRA.t:$(n)/estimate=true'/>
+            <connect srcID='rhoScalerSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and rhoSTRRA.t:$(n)/estimate=true'/>
 
 
-            <connect srcID='SAUniformOperatorGENERICSR.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='RootScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            <connect srcID='TreeScalerGENERICSR.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(GENERICSR.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='SRLeafToSampledAncestorJump.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='SRWilsonBalding.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='LeftRightChildSwapSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='CountSTRRA.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n)) and inposterior(Tree.t:$(n))'/>
 
 
-            <connect srcID='GENERICSR.t:$(n)' if="isInitializing" targetID='prior' inputName='distribution' />
-            <!--
-            <connect srcID='GENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='inposterior(GENERICSR.t:$(n)) and inlikelihood(Tree.t:$(n)) and Tree.t:$(n)/estimate=true'/>
-            -->
+            <connect srcID='SAUniformOperatorSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='RootScalerSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and Tree.t:$(n)/estimate=true'/>
+            <connect srcID='TreeScalerSTRRA.t:$(n)' targetID='mcmc' inputName='operator' if='inposterior(SRBDM.t:$(n)) and Tree.t:$(n)/estimate=true'/>
 
 
+            <connect srcID='SRBDM.t:$(n)' if="isInitializing" targetID='prior' inputName='distribution' />
 
-            <connect srcID='GENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n))'/>
-
-
-            <connect srcID='diversificationRateGENERICSR.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(GENERICSR.t:$(n)) and diversificationRateGENERICSR.t:$(n)/estimate=true'/>
-            <connect srcID='diversificationRateGENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n)) and diversificationRateGENERICSR.t:$(n)/estimate=true'/>
-
-            <connect srcID='turnoverGENERICSR.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(GENERICSR.t:$(n)) and turnoverGENERICSR.t:$(n)/estimate=true'/>
-            <connect srcID='turnoverGENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n)) and turnoverGENERICSR.t:$(n)/estimate=true'/>
-
-            <connect srcID='samplingProportionGENERICSR.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(GENERICSR.t:$(n)) and samplingProportionGENERICSR.t:$(n)/estimate=true'/>
-            <connect srcID='samplingProportionGENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n)) and samplingProportionGENERICSR.t:$(n)/estimate=true'/>
-
-            <connect srcID='rhoGENERICSR.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(GENERICSR.t:$(n)) and rhoGENERICSR.t:$(n)/estimate=true'/>
-            <connect srcID='rhoGENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n)) and rhoGENERICSR.t:$(n)/estimate=true'/>
+            <connect srcID='SRBDM.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n))'/>
 
 
-            <connect srcID='originGENERICSR.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(GENERICSR.t:$(n)) and originGENERICSR.t:$(n)/estimate=true and GENERICSR.t:$(n)/conditionOnRoot=false'/>
-            <connect srcID='originGENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n)) and originGENERICSR.t:$(n)/estimate=true and GENERICSR.t:$(n)/conditionOnRoot=false'/>
-            <connect srcID='GENERICSR.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(GENERICSR.t:$(n))'/>
+            <connect srcID='diversificationRateSTRRA.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(SRBDM.t:$(n)) and diversificationRateSTRRA.t:$(n)/estimate=true'/>
+            <connect srcID='diversificationRateSTRRA.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n)) and diversificationRateSTRRA.t:$(n)/estimate=true'/>
+
+            <connect srcID='turnoverSTRRA.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(SRBDM.t:$(n)) and turnoverSTRRA.t:$(n)/estimate=true'/>
+            <connect srcID='turnoverSTRRA.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n)) and turnoverSTRRA.t:$(n)/estimate=true'/>
+
+            <connect srcID='samplingProportionSTRRA.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(SRBDM.t:$(n)) and samplingProportionSTRRA.t:$(n)/estimate=true'/>
+            <connect srcID='samplingProportionSTRRA.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n)) and samplingProportionSTRRA.t:$(n)/estimate=true'/>
+
+            <connect srcID='rhoSTRRA.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(SRBDM.t:$(n)) and rhoSTRRA.t:$(n)/estimate=true'/>
+            <connect srcID='rhoSTRRA.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n)) and rhoSTRRA.t:$(n)/estimate=true'/>
+
+
+            <connect srcID='originSTRRA.t:$(n)' targetID='state' inputName='stateNode' if='inposterior(SRBDM.t:$(n)) and originSTRRA.t:$(n)/estimate=true and SRBDM.t:$(n)/conditionOnRoot=false'/>
+            <connect srcID='originSTRRA.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n)) and originSTRRA.t:$(n)/estimate=true and SRBDM.t:$(n)/conditionOnRoot=false'/>
+            <connect srcID='SRBDM.t:$(n)' targetID='tracelog' inputName='log' if='inposterior(SRBDM.t:$(n))'/>
 
         </subtemplate>
 
-		<alignmentProvider id="Add Morphological Data" spec='morphmodels.app.beauti.BeautiMorphModelAlignmentProvider' template='@SRTrait'/>
-
+        <alignmentProvider id="Add Morphological Data" spec='morphmodels.app.beauti.BeautiMorphModelAlignmentProvider' template='@SRTrait'/>
 </mergewith>
 
 </beast>

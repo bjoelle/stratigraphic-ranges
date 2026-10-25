@@ -20,6 +20,10 @@
                 args=""
     />
 
+    <service type="beastfx.app.inputeditor.InputEditor">
+        <provider classname="beastfx.app.beauti.SRPriorInputEditor"/>
+    </service>
+
     <service type="beastfx.app.beauti.PriorProvider">
         <provider classname="sr.beauti.SRMRCAPriorProvider"/>
     </service>

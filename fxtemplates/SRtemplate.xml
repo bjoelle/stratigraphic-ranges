@@ -32,7 +32,7 @@
                               beast.base.inference.MCMC.operatorschedule,
                               beast.base.inference.MCMC.state,
                               beast.base.inference.MCMC.distribution,
-							  beast.base.inference.MCMC.init,
+                              beast.base.inference.MCMC.init,
                               beast.base.evolution.substitutionmodel.WAG.rates,
                               beast.base.evolution.substitutionmodel.WAG.frequencies,
                               beast.base.evolution.substitutionmodel.JTT.rates,
@@ -48,6 +48,12 @@
                               beast.base.evolution.substitutionmodel.GTR.rates,
                               beast.base.evolution.substitutionmodel.JukesCantor.frequencies,
                               beast.base.inference.distribution.Prior.x,
+                              sr.math.distributions.SRMRCAPrior.tree,
+                              sr.math.distributions.SRMRCAPrior.taxonset,
+                              sr.math.distributions.SRMRCAPrior.monophyletic,
+                              sr.math.distributions.SRMRCAPrior.distr,
+                              sr.math.distributions.SRMRCAPrior.tipsonly,
+                              sr.math.distributions.SRMRCAPrior.useOriginate,
                               beast.base.evolution.tree.MRCAPrior.tree,
                               beast.base.evolution.tree.MRCAPrior.monophyletic,
                               beast.base.evolution.tree.MRCAPrior.taxonset,
@@ -69,19 +75,19 @@
 
 
         <!--
-        "aux-partitions-panels" tag has been renamed to disable part of MM module's template,
-        to prevent having two identical menus ("Add Morphological Data" and "SR Add Morphological Data").
-        FIXME-TBC: see DEV_NOTES (TAG288348E6HC3K4ST3215O4UVZYD and TAG7783434DHZA6KEZ0XCZXDBAAL9)
+        "aux-partitions-panels" tag has been disabled
+        to prevent MM's main subtemplate merge and having two identical menus
+        ("Add Morphological Data" and "SR Add Morphological Data").
 
-        But this doesn't concern LewisMK template.
+        Note: MM's LewisMK template is still merged.
         -->
         <mergepoint id='aux-partitions-panels-disabled'/>
 
-        <!-- molecular and morphological subtemplate -->
+        <!-- molecular and morphological subtemplates -->
         <mergepoint id='sr-align-partitions-panels'/>
         <mergepoint id='sr-align-trait-partitions-panels'/>
 
-		<panel spec='BeautiPanelConfig' panelname="Tree" tiptext="Specify the fixing of the tree and the times at which taxa were sampled"
+        <panel spec='BeautiPanelConfig' panelname="Tree" tiptext="Specify the fixing of the tree and the times at which taxa were sampled"
             path='tree'
             hasPartitions="Tree" icon='2.png.x' forceExpansion='TRUE'
             isVisible='true'>
@@ -95,56 +101,50 @@
             isVisible='true'
         />
 
-		<panel spec='BeautiPanelConfig' panelname="Site Model" tiptext="Site model and substitution model specifications"
+        <panel spec='BeautiPanelConfig' panelname="Site Model" tiptext="Site model and substitution model specifications"
             path='siteModel'
             hasPartitions="SiteModel" icon='3.png.x' forceExpansion='TRUE'
         />
-		<mergepoint id='aux-sitemodel-panels'/>
+        <mergepoint id='aux-sitemodel-panels'/>
 
         <panel spec='BeautiPanelConfig' panelname="Clock Model" tiptext="Clock model"
             path='branchRateModel'
             hasPartitions="ClockModel" icon='4.png.x' forceExpansion='TRUE'
         />
-		<mergepoint id='aux-clockmodel-panels'/>
+        <mergepoint id='aux-clockmodel-panels'/>
 
-		<panel spec='BeautiPanelConfig' panelname="Initialization" tiptext="Initial state"
+        <panel spec='BeautiPanelConfig' panelname="Initialization" tiptext="Initial state"
             path='state/stateNode'
             hasPartitions="none" icon='6.png.x' forceExpansion='TRUE_START_COLLAPSED'
             isVisible='false'
         />
-		<mergepoint id='aux-initilisation-panels'/>
+        <mergepoint id='aux-initilisation-panels'/>
 
         <panel spec='BeautiPanelConfig' panelname="Priors" tiptext="Other priors"
             path='distribution/distribution[id="prior"]/distribution'
             hasPartitions="none" icon='7.png.x' forceExpansion='TRUE_START_COLLAPSED'
             type='beast.base.inference.Distribution'
         />
-		<mergepoint id='aux-priors-panels'/>
+        <mergepoint id='aux-priors-panels'/>
         
         <panel spec='BeautiPanelConfig' panelname="Operators" tiptext="MCMC Operator details"
             path='operator'
             hasPartitions="none" icon='8.png.x' forceExpansion='TRUE_START_COLLAPSED'
             isVisible='false' buttonStatus='ADD_ONLY'
         />
-		<mergepoint id='aux-operators-panels'/>
+        <mergepoint id='aux-operators-panels'/>
 
-		<panel spec='BeautiPanelConfig' panelname="MCMC" tiptext="MCMC parameters"
+        <panel spec='BeautiPanelConfig' panelname="MCMC" tiptext="MCMC parameters"
             path=''
             hasPartitions="none" icon='9.png.x' forceExpansion='TRUE'
             />
-		<mergepoint id='aux-panels'/>
+        <mergepoint id='aux-panels'/>
 
 
-        <!-- required for showing priors panel -->
         <mergepoint id='substModelTemplates'/>
-
-		<mergepoint id='clockModelTemplates'/>
-
-        <!-- required for showing priors combobox * -->
+        <mergepoint id='clockModelTemplates'/>
         <mergepoint id='treePriorTemplates'/>
-
         <mergepoint id='parametricDistributions'/>
-
         <mergepoint id='runnables'/>
 
         <subtemplate id='RandomTree' class='sr.evolution.tree.RandomSRangeTree' mainid='RandomTree.t:$(n)'>
@@ -158,32 +158,22 @@
             ]]>
         </subtemplate>
 
-        <!-- New Tree Prior -->
-        <subtemplate id='StratigraphicRangesModel' class='sr.speciation.SRangesBirthDeathModel' mainid="GENERICSR.t:$(n)">
+        <subtemplate id='StratigraphicRangesModel' class='sr.speciation.SRangesBirthDeathModel' mainid="SRBDM.t:$(n)">
             <![CDATA[
-
-                <SRangesBirthDeathModel spec="sr.speciation.SRangesBirthDeathModel" id="GENERICSR.t:$(n)" tree="@Tree.t:$(n)" conditionOnRhoSampling="true">
-                    <parameter name="origin"              id="originSR.t:$(n)"              value ="100.0" lower="0."/>
+                <SRangesBirthDeathModel spec="sr.speciation.SRangesBirthDeathModel" id="SRBDM.t:$(n)" tree="@Tree.t:$(n)" conditionOnRhoSampling="true">
+                    <parameter name="origin" id="originSR.t:$(n)" value ="100.0" lower="0."/>
                     <parameter name="diversificationRate" id="diversificationRateSR.t:$(n)" value="1." lower="0."/>
-                    <parameter name="turnover"            id="turnoverSR.t:$(n)"            value=".5" lower="0." upper="1."/>
-                    <parameter name="samplingProportion"  id="samplingProportionSR.t:$(n)"  value="0.5" lower="0." upper="1."/>
-                    <parameter name="rho"                 id="rhoSR.t:$(n)"                 value="1.0" lower="0." upper = "1." estimate="false"/>
-                    <parameter name="removalProbability"  id="rSR.t:$(n)"                   value="0." lower="0." upper="1."/>
+                    <parameter name="turnover" id="turnoverSR.t:$(n)" value=".5" lower="0." upper="1."/>
+                    <parameter name="samplingProportion" id="samplingProportionSR.t:$(n)" value="0.5" lower="0." upper="1."/>
+                    <parameter name="rho" id="rhoSR.t:$(n)" value="1.0" lower="0." upper = "1." estimate="false"/>
+                    <parameter name="removalProbability" id="rSR.t:$(n)" value="0." lower="0." upper="1."/>
                 </SRangesBirthDeathModel>
             ]]>
 
-            <connect srcID='GENERICSR.t:$(n)' targetID='prior' inputName='distribution' if="inposterior(GENERICSR.t:$(n)) and inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true"/>
-            <!--
-            <connect srcID='GENERICSR.t:$(n)' targetID='prior' inputName='distribution' if="inposterior(GENERICSR.t:$(n)) and inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true"/>
-            <connect method="msbd.app.beauti.InitModelConnector.customConnector" if='inposterior(GENERICSR.t:$(n)) and inposterior(Tree.t:$(n))'/>            
-            <connect srcID='stdStateslog.t:$(n)' targetID='mcmc' inputName='logger' if='inposterior(stdBDMRT.t:$(n))'/>
-            <connect srcID='GENERICSR.t:$(n)' targetID='prior' inputName='distribution' if='isInitializing'/>
-            -->
-			
+            <connect srcID='SRBDM.t:$(n)' targetID='prior' inputName='distribution' if="inposterior(SRBDM.t:$(n)) and inposterior(Tree.t:$(n)) and Tree.t:$(n)/estimate=true"/>
         </subtemplate>
     </beauticonfig>
 
-    <!-- required for prior panel -->
     <mergepoint id='misc'/>
 
     <!-- framework for main model -->
@@ -205,11 +195,10 @@
 
         <logger id='screenlog' logEvery="1000">
             <log idref="posterior"/>
-      	    <!--this ESS is computed solely based on the current BEAST run (not the chain)-->
-      	    <!--<ESS spec='ESS' name='log' arg="@posterior"/>-->
+            <!--this ESS is computed solely based on the current BEAST run (not the chain)-->
+            <!--<ESS spec='ESS' name='log' arg="@posterior"/>-->
             <log idref="likelihood"/>
             <log idref="prior"/>
         </logger>
     </run>
-
 </beast>

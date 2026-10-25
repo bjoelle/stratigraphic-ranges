@@ -1,0 +1,8 @@
+Madrynornis_mirandus_10.0_first
+Madrynornis_mirandus_10.0_last
+Marplesornis_novaezealandiae_5.1_first
+Marplesornis_novaezealandiae_5.1_last
+Spheniscus_muizoni_9.1_first
+Spheniscus_muizoni_9.1_last
+Pygoscelis_antarctica_0.0_first
+Pygoscelis_antarctica_0.0_last

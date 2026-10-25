@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.Separator;
+import javafx.geometry.Pos;
 
 import javafx.collections.ObservableList;
 import javafx.collections.ListChangeListener;
@@ -71,7 +72,6 @@ public class StratigraphicRangeDialog extends DialogPane {
     String id;
     TextField idEntry;
 
-    List<Taxon> _taxa;
     ArrayList<StratigraphicRange> _stratigraphicRanges;
 
     //details section
@@ -99,11 +99,7 @@ public class StratigraphicRangeDialog extends DialogPane {
         box = FXUtils.newVBox();
         setBoxStyle(box);
 
-
-
-
-        //FIXME: remove _taxa
-        _taxa = new ArrayList<>();
+        List<Taxon> _taxa = new ArrayList<>();
         _taxa.addAll(tset);
         Comparator<Taxon> comparator = (o1, o2) -> o1.getID().compareTo(o2.getID());
         Collections.sort(_taxa, comparator);
@@ -237,8 +233,7 @@ public class StratigraphicRangeDialog extends DialogPane {
 
         if (!Tools.checkRangeConsistency(firstOccurrenceID.getText(), lastOccurrenceID.getText())) {
 
-            //FIXME (log or exception)
-            //"Age inconsistency detected. First occurrence is older than last occurrence ("+rangeID.getText()+")"
+            Alert.showMessageDialog(null, "Creation failed: age inconsistency detected. First occurrence is older than last occurrence ("+rangeID.getText()+")");
 
             return;
         }
@@ -248,13 +243,14 @@ public class StratigraphicRangeDialog extends DialogPane {
 
     void editSR() {
         if( (rangeID.getText().length()<1) || (firstOccurrenceID.getText().length()<1) || (lastOccurrenceID.getText().length()<1) ) {
+            Alert.showMessageDialog(null, "Update failed: some values are missing");
+
             return;
         }
         
         if (!Tools.checkRangeConsistency(firstOccurrenceID.getText(), lastOccurrenceID.getText())) {
 
-            //FIXME (log or exception)
-            //"Age inconsistency detected. First occurrence is older than last occurrence ("+rangeID.getText()+")"
+            Alert.showMessageDialog(null, "Update failed: age inconsistency detected in the new values. First occurrence is older than last occurrence ("+rangeID.getText()+")");
 
             return;
         }
@@ -424,13 +420,66 @@ public class StratigraphicRangeDialog extends DialogPane {
 
         hbox.getChildren().add(box);        
 
+        hbox.getChildren().add(createTaxonBtns());        
+
         return hbox;
+    }
+
+    Pane createTaxonBtns() {
+        VBox vbox = FXUtils.newVBox();
+        vbox.setMinSize(140,30);
+        setBoxStyle(vbox);
+
+        HBox hbox = FXUtils.newHBox();
+        hbox.setMinSize(140,30);
+        VBox.setVgrow(hbox, Priority.ALWAYS);
+        setBoxStyle(hbox);
+        vbox.getChildren().add(hbox);        
+
+        Button copyToFirstBtn = new Button("Copy to first");
+        copyToFirstBtn.setId("copyToFirstBtn");
+        copyToFirstBtn.setOnAction(e -> {
+                int idx = listOfTaxon.getSelectionModel().getSelectedIndex();
+
+                if(idx<0) {
+                    //nothing selected
+
+                    Alert.showMessageDialog(null, "Nothing selected");
+
+                    return;
+                }
+
+                Taxon t = listOfTaxon.getItems().get(idx);
+                firstOccurrenceID.setText(t.getID());
+            });
+        vbox.getChildren().add(copyToFirstBtn);
+
+        Button copyToLastBtn = new Button("Copy to last");
+        copyToLastBtn.setId("copyToLastBtn");
+        copyToLastBtn.setOnAction(e -> {
+                int idx = listOfTaxon.getSelectionModel().getSelectedIndex();
+
+                if(idx<0) {
+                    //nothing selected
+
+                    Alert.showMessageDialog(null, "Nothing selected");
+
+                    return;
+                }
+
+                Taxon t = listOfTaxon.getItems().get(idx);
+                lastOccurrenceID.setText(t.getID());
+            });
+        vbox.getChildren().add(copyToLastBtn);
+
+        return vbox;
     }
 
     Pane createBtnsBar() {
         VBox vbox = FXUtils.newVBox();
         setBoxStyle(vbox);
 
+        //filler
         HBox hbox12 = FXUtils.newHBox();
         setBoxStyle(hbox12);
         hbox12.setMinSize(400,30);
@@ -485,8 +534,7 @@ public class StratigraphicRangeDialog extends DialogPane {
                         listOfSR.getItems().add(sr);
                     }
                 } catch (Exception ex) {
-                    //FIXME
-                    System.out.println("IO Error: "+ex);
+                    System.out.println("Error occured during stratigraphic ranges import: "+ex);
                 }
 
             });

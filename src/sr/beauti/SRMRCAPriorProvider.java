@@ -9,25 +9,28 @@ import beast.base.evolution.alignment.Taxon;
 import beast.base.evolution.alignment.TaxonSet;
 import beast.base.evolution.tree.Tree;
 import beast.base.inference.Distribution;
-import beast.base.inference.Logger;
+import beast.base.inference.MCMC;
 import beast.base.inference.State;
 import beast.base.inference.StateNode;
-import beast.base.inference.distribution.OneOnX;
+import beast.base.inference.StateNodeInitialiser;
 import beastfx.app.beauti.PriorListInputEditor;
 import beastfx.app.beauti.PriorProvider;
-import beastfx.app.inputeditor.BEASTObjectPanel;
 import beastfx.app.inputeditor.BeautiDoc;
-import beastfx.app.util.Alert;
-
-import beast.base.core.BEASTInterface;
-import beast.base.core.BEASTObject;
-
-import sr.math.distributions.SRMRCAPrior;
 import sr.evolution.sranges.StratigraphicRange;
-import sr.evolution.tree.SRTree;
 import sr.evolution.tree.RandomSRangeTree;
+import sr.evolution.tree.SRTree;
+import sr.math.distributions.SRMRCAPrior;
+
 
 public class SRMRCAPriorProvider implements PriorProvider {
+
+	@Override
+	public boolean canProvidePrior(BeautiDoc doc) {
+        //FIXME
+
+        //this is to not appear in the '+'/add prior provider list popup
+		return false;
+	}
 
 	@Override
 	public List<Distribution> createDistribution(BeautiDoc doc) {
@@ -57,8 +60,7 @@ public class SRMRCAPriorProvider implements PriorProvider {
             logger.loggersInput.setValue(prior, logger);
             */
         } catch (Exception e) {
-            //FIXME
-            System.out.println("mydeb444 => "+e);
+            System.out.println("Error occured during sRanges edition: "+e);
         }
 
         List<Distribution> selectedPlugins = new ArrayList<>();
@@ -118,43 +120,19 @@ public class SRMRCAPriorProvider implements PriorProvider {
     }
 
     SRTree getTree(BeautiDoc doc) {
+        SRTree srtree = null;
 
-        //way1
-        /*
         List<Tree> trees = new ArrayList<>();
-        doc.scrubAll(true, false);
+        //doc.scrubAll(true, false);
         State state = (State) doc.pluginmap.get("state");
         for (StateNode node : state.stateNodeInput.get()) {
             if (node instanceof Tree) {
                 trees.add((Tree) node);
             }
         }
-        assert trees.size() == 1;
-        return trees.get(0);
-        */
+        assert trees.size() == 1; //fixme: what if tree are not linked
+        srtree = (SRTree) trees.get(0);
 
-        //way2
-        SRTree srtree = null;
-        for (BEASTInterface bi : doc.pluginmap.values()) {
-            BEASTObject beastObject = (BEASTObject) bi;
-
-
-            //debug
-            /*
-            String name = beastObject.getClass().getName();
-            String ID = beastObject.getID();
-            if (name.toUpperCase().contains("TREE")) {
-                System.out.println("mydeb503 - name="+name+", ID="+ID);
-            }
-            */
-
-            if (beastObject instanceof sr.evolution.tree.SRTree) {
-                String id = beastObject.getID();
-                if (id.equals("Tree.t:penguins_both")) { //FIXME: specific name
-                    srtree = (SRTree) beastObject;
-                }
-            }
-        }
         return srtree;
     }
 
@@ -180,16 +158,14 @@ public class SRMRCAPriorProvider implements PriorProvider {
 
     RandomSRangeTree getRandomTree(BeautiDoc doc) {
         RandomSRangeTree rtree = null;
-        for (BEASTInterface bi : doc.pluginmap.values()) {
-            BEASTObject beastObject = (BEASTObject) bi;
 
-            if (beastObject instanceof sr.evolution.tree.RandomSRangeTree) {
-                String id = beastObject.getID();
-                if (id.equals("RandomTree.t:penguins_both")) { //FIXME: specific name
-                    rtree = (RandomSRangeTree) beastObject;
-                }
+        MCMC m = (MCMC) doc.mcmc.get();
+        for (StateNodeInitialiser s : m.initialisersInput.get()) {
+            if (s instanceof sr.evolution.tree.RandomSRangeTree) {
+                rtree = (RandomSRangeTree) s;
             }
         }
+
         return rtree;
     }
 
