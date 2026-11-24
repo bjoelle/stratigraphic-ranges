@@ -3,7 +3,8 @@
 - [Introduction](#introduction)
 - [Data](#data)
 - [Output](#output)
-- [Usage](#usage)
+- [Installation](#installation)
+- [Beauti Usage](#beauti-usage)
 - [Tree Summarization](#tree-summarization)
 - [Model Features](#model-features)
   - [Tree Encoding](#tree-encoding)
@@ -35,11 +36,25 @@ sRanges produces a posterior distribution of model parameters and oriented trees
 - In the macroevolution case, they are interpreted as a budding speciation model, where each child of a node is either an ancestor or descendant species.
 - In epidemiology, they are transmission trees where each child of a node is either a donor or recipient.
 
-## Installation and Usage
+## Installation
 
-You can install the latest release by adding the link https://raw.githubusercontent.com/jugne/stratigraphic-ranges/master/package.xml as a third party BEAST package repository in Beauti and installing the sRanges package that appears. 
+You can install the latest release by adding the link https://raw.githubusercontent.com/jugne/stratigraphic-ranges/master/package.xml as a third party BEAST package repository in Beauti and installing the sRanges package that appears.
 
-The Beauti template is currently not available. You can find examples of BEAST2 XML in the `examples` folder.
+You can find examples of BEAST2 XML in the `examples` folder.
+
+## Beauti Usage
+
+Start Beauti and load the main template called "SRtemplate" (menu "File" => "Template").
+
+Load alignement (menu "Add alignment").
+
+Load morphological data (menu "Add morphological data").
+
+Link trees (select all partitions then click "Link Trees").
+
+Enable tip-dates (select 'Tree' tab, then tick 'use tip dates', 'autoconfigure' and 'use everything'. Then select 'after last' and click 'ok').
+
+To edit the stratigraphics ranges, click on the 'Edit' button in the Priors tab (next to the 'Stratigraphic ranges' label).
 
 ## Tree Summarization
 
@@ -169,7 +184,7 @@ Pull requests are welcome. If you have major suggestions, please discuss them be
 
 ## Acknowledgements
 
-The sRanges are developed by Alexandra (Sasha) Gavryushkina and Ugne Stolz. 
+The sRanges are developed by Alexandra (Sasha) Gavryushkina and Ugne Stolz.
 
 ## License
 
