@@ -190,14 +190,14 @@ The other two files are `sr-align.xml`, which contains instructions to handle mo
 and `sr-align-trait.xml` which contains instructions to handle morphological data.
 Those last two files are called `subtemplates`.
 
-To be noted that the parameter called `srangesPriorSTRRA` in `sr-align.xml` file do not behave as a regular Prior.
+To be noted that the parameter called `srangesPriorSTRRA` in `sr-align.xml` file do not behave as a regular `Prior`.
 It has been added only to be used as an anchor in the `Priors` tab, for the stratigraphic ranges `Edit` button.
 
 Source code of the Stratigraphic ranges editor is stored in `src/sr/beauti` folder.
 One file contains the GUI code (*StratigraphicRangeDialog.java*), two files contain code for import/export operations
-(*SRExport.java* and *SRImport.java*) and one contains code for interfacing the editor window with Beauti (*SRMRCAPriorProvider.java*).
+(*SRExport.java* and *SRImport.java*) and one file contains code for interfacing the editor window with Beauti (*SRMRCAPriorProvider.java*).
 
-There are two other files at different location that are involved in the interfacing between the stratigraphic ranges editor and Beauti:
+There are also two other files at different location that are involved in the interfacing between the stratigraphic ranges editor and Beauti:
 `src/sr/math/distributions/SRMRCAPrior.java` and `/beastfx/app/beauti/SRPriorInputEditor.java`.
 
 ### Repository structure
