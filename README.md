@@ -10,6 +10,8 @@
   - [Tree Encoding](#tree-encoding)
   - [Clock and Substitution Models](#clock-and-substitution-models)
 - [Test](#test)
+- [For developers](#for-developers)
+- [Beauti SR module](#beauti-sr-module)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -54,7 +56,7 @@ Link trees (select all partitions then click "Link Trees").
 
 Enable tip-dates (select 'Tree' tab, then tick 'use tip dates', 'autoconfigure' and 'use everything'. Then select 'after last' and click 'ok').
 
-To edit the stratigraphics ranges, click on the 'Edit' button in the Priors tab (next to the 'Stratigraphic ranges' label).
+To open the stratigraphics ranges editor, click on the 'Edit' button in the Priors tab.
 
 ## Tree Summarization
 
@@ -175,6 +177,28 @@ $ ant test
 Tests results will be stored in _test-reports_ folder.
 
 ## For developers
+
+### Beauti SR module
+
+This section contains implementation details of the Beauti SR module.
+
+Beauti configuration parameters for the SR model are stored in three XML files.
+
+The first file is 'SRtemplate.xml', also called 'Main template'.
+It contains instructions to configure Beauti tabs and to import subtemplates.
+The other two files are 'sr-align.xml', which contains instructions to handle molecular data
+and 'sr-align-trait.xml' which contains instructions to handle morphological data.
+Those last two files are called 'subtemplates'.
+
+To be noted that the parameter called 'srangesPriorSTRRA' do not behave as a regular Prior.
+It has been added in 'sr-align.xml' only to be used as an anchor for the stratigraphic ranges 'Edit' button.
+
+Source code of the Stratigraphic ranges editor is stored in 'src/sr/beauti' folder.
+One file contains the GUI code (StratigraphicRangeDialog.java), two files are used for import/export operations
+('SRExport.java' and 'SRImport.java') and one file for interfacing the editor window with Beauti ('SRMRCAPriorProvider.java').
+
+There are two other files at different location that are involved in the interfacing between the stratigraphic ranges editor and Beauti:
+'src/sr/math/distributions/SRMRCAPrior.java' and '/beastfx/app/beauti/SRPriorInputEditor.java'.
 
 ### Repository structure
 
